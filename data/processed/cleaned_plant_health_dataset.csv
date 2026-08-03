@@ -1,0 +1,16 @@
+Plant_ID,Temperature,Humidity,Soil_Moisture,Leaf_Color,Leaf_Area,Disease,Observation_Date
+Pl001,28.5,72,45.0,Green,35.2,Healthy,2026-08-01
+Pl002,34.1,88,62.0,Yellow,28.6,Blight,2026-08-01
+Pl003,26.7,68,40.0,Green,37.1,Healthy,2026-08-02
+Pl004,31.2,81,58.0,Brown,24.9,Rust,2026-08-02
+Pl005,29.8,75,49.0,Green,36.8,Healthy,2026-08-03
+Pl006,33.4,90,64.0,Yellow,27.4,Blight,2026-08-03
+Pl007,27.1,70,43.0,Green,38.0,Healthy,2026-08-04
+Pl008,30.6,79,55.0,Brown,25.8,Mildew,2026-08-04
+Pl009,32.5,85,60.0,Yellow,26.9,Rust,2026-08-05
+Pl010,28.9,73,47.0,Green,35.9,Healthy,2026-08-05
+Pl011,30.0,76,48.0,Green,36.2,Healthy,2026-08-06
+Pl012,31.0,82,58.0,Yellow,27.5,Blight,2026-08-06
+Pl013,27.8,69,51.93333333333333,Green,37.4,Healthy,2026-08-07
+Pl014,30.2,80,56.0,Brown,25.5,Rust,2026-08-07
+Pl015,29.1,74,47.0,Green,35.7,Healthy,2026-08-08

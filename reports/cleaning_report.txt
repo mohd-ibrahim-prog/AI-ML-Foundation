@@ -1,0 +1,27 @@
+============================================================
+        WEEK 1 DATA CLEANING REPORT
+============================================================
+
+Rows Before Cleaning : 16
+Rows After Cleaning  : 15
+
+Missing Values Before : 2
+Missing Values After  : 0
+
+Duplicate Rows Removed : 1
+
+Feature Columns
+------------------------------------------------------------
+- Plant_ID
+- Temperature
+- Humidity
+- Soil_Moisture
+- Leaf_Color
+- Leaf_Area
+- Observation_Date
+
+Label Column : Disease
+
+============================================================
+Dataset cleaning completed successfully.
+============================================================
