@@ -1,0 +1,5 @@
+Temperature,Humidity,Soil_Moisture,Sunlight_Hours,Fertilizer_Amount,Actual_Growth,Predicted_Growth
+24.5,58,42,6.2,8,14.8,14.284568768040895
+25.6,62,46,6.9,10,16.7,16.548749880063937
+27.4,66,51,7.6,12,19.3,19.434405194389953
+25.8,61,45,6.8,10,16.2,16.31247066438411

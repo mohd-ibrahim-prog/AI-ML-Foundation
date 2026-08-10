@@ -1,50 +1,62 @@
-# Week 1 - AI/ML Foundation
+# AI/ML Foundation Program
 
-## Overview
+This repository contains my implementations for the AI/ML Foundation Program.
 
-This repository contains the Week 1 implementation of the AI/ML Foundation Program.
+The foundation phase is designed to build the core machine learning skills required before moving into the final project.
 
-The objective of this week's assignment is to:
+## Foundation Roadmap
 
-- Learn Pandas fundamentals
-- Understand Features and Labels
-- Load a sample dataset
-- Clean and preprocess the dataset
-- Generate a cleaned dataset and a simple cleaning report
-
----
-
-## Project Structure
-
-```
-week1/
-│
-├── data/
-├── src/
-├── reports/
-├── notebooks/
-└── outputs/
-```
+| Week | Topic | Build | Status |
+|------|-------|-------|--------|
+| Week 1 | Pandas, Features & Labels, Data Cleaning | Load and clean a sample dataset | Completed |
+| Week 2 | Linear Regression, Train/Test Split, Evaluation Metrics | Train a regression model | Completed |
+| Week 3 | Text Preprocessing, TF-IDF, Naive Bayes | Build a spam classifier | Upcoming |
 
 ---
 
-## Technologies Used
+# Week 1 - Data Loading & Cleaning
 
-- Python 3
-- Pandas
+## Objective
 
----
+The Week 1 implementation focuses on:
 
-## How to Run
+- Pandas fundamentals
+- Understanding features and labels
+- Loading a sample dataset
+- Identifying missing values
+- Cleaning the dataset
+- Separating features and labels
+- Generating a cleaning report
 
-```bash
-python src/main.py
-```
+## Week 1 Dataset
 
----
+The dataset contains plant health observations with information such as:
 
-## Expected Output
+- Plant ID
+- Temperature
+- Humidity
+- Soil Moisture
+- Leaf Color
+- Leaf Area
+- Disease
+- Observation Date
 
-- Cleaned dataset
-- Cleaning report
-- Features and Label separation
+The `Disease` column is treated as the label, while the remaining relevant columns are used as features.
+
+## Week 1 Structure
+
+```text
+data/
+├── raw/
+└── processed/
+
+src/
+├── main.py
+├── data_loader.py
+├── data_cleaner.py
+├── feature_label.py
+└── report_generator.py
+
+reports/
+notebooks/
+outputs/

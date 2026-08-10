@@ -1,0 +1,11 @@
+WEEK 2 - LINEAR REGRESSION MODEL REPORT
+=============================================
+
+Model: Linear Regression
+
+Evaluation Metrics
+--------------------
+MAE  : 0.2284
+MSE  : 0.0798
+RMSE : 0.2825
+R2   : 0.9699

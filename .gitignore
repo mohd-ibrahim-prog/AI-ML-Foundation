@@ -1,5 +1,29 @@
+# Python cache files
 __pycache__/
-*.pyc
+*.py[cod]
+
+# Jupyter Notebook
 .ipynb_checkpoints/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# VS Code settings
 .vscode/
+
+# Operating system files
 .DS_Store
+Thumbs.db
+
+# Python build files
+build/
+dist/
+*.egg-info/
+
+# Environment variables and secrets
+.env
+
+# Jupyter temporary files
+*.tmp
