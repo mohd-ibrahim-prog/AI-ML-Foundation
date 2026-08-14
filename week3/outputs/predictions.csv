@@ -1,0 +1,22 @@
+message,actual_label,predicted_label
+win a brand new car by entering our free lucky draw today click now,spam,spam
+hey are we still meeting for lunch tomorrow,ham,ham
+exclusive offer just for you off all items shop before midnight,spam,spam
+you have been randomly selected to win a macbook claim it here now,spam,spam
+your package could not be delivered click here to reschedule now,spam,ham
+i ll be home by do you need anything from the store,ham,ham
+can you review my resume before i send it out,ham,ham
+you have won a free cruise trip reply yes to claim your prize now,spam,spam
+can you help me fix this bug in my code,ham,ham
+the movie starts at let s leave by,ham,ham
+i finished the assignment can you check it before i submit,ham,ham
+thanks for the birthday gift i really loved it,ham,ham
+let s grab coffee before the meeting starts,ham,ham
+free ringtones and wallpapers download now by clicking this link,spam,spam
+i m stuck in traffic might be minutes late,ham,ham
+the train is running minutes late today,ham,ham
+you have been awarded a scholarship send your details to claim it,spam,spam
+winner you have been selected to receive a free prize call now,spam,spam
+don t forget to bring your laptop for the workshop,ham,spam
+you have new voicemail regarding a prize call this number now,spam,spam
+you have an unclaimed prize waiting call this number immediately,spam,spam

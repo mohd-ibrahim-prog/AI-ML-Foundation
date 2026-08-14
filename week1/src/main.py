@@ -45,9 +45,28 @@ def main():
     print("     DATA LOADING & CLEANING")
     print("=" * 60)
 
-    raw_dataset_path = Path("data/raw/plant_health_dataset.csv")
-    cleaned_dataset_path = Path("data/processed/cleaned_plant_health_dataset.csv")
-    report_path = Path("reports/cleaning_report.txt")
+    # Locate the Week 1 project directory
+    week1_dir = Path(__file__).resolve().parent.parent
+
+    raw_dataset_path = (
+        week1_dir
+        / "data"
+        / "raw"
+        / "plant_health_dataset.csv"
+    )
+
+    cleaned_dataset_path = (
+        week1_dir
+        / "data"
+        / "processed"
+        / "cleaned_plant_health_dataset.csv"
+    )
+
+    report_path = (
+        week1_dir
+        / "reports"
+        / "cleaning_report.txt"
+    )
 
     # Load dataset
     original_dataset = load_dataset(raw_dataset_path)
@@ -64,12 +83,20 @@ def main():
     cleaned_dataset = standardize_text_columns(cleaned_dataset)
 
     # Save cleaned dataset
-    save_clean_dataset(cleaned_dataset, cleaned_dataset_path)
+    save_clean_dataset(
+        cleaned_dataset,
+        cleaned_dataset_path,
+    )
 
     # Features & Label
-    features, label = split_features_and_label(cleaned_dataset)
+    features, label = split_features_and_label(
+        cleaned_dataset
+    )
 
-    display_feature_label_info(features, label)
+    display_feature_label_info(
+        features,
+        label,
+    )
 
     # Generate report
     generate_cleaning_report(

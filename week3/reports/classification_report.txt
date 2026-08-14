@@ -1,0 +1,28 @@
+WEEK 3 - SPAM CLASSIFIER REPORT
+=============================================
+
+Model: TF-IDF + Multinomial Naive Bayes
+
+Evaluation Metrics
+--------------------
+Accuracy  : 0.9048
+Precision : 0.9000  (spam)
+Recall    : 0.9000  (spam)
+F1-score  : 0.9000  (spam)
+
+Confusion Matrix (rows = actual, columns = predicted)
+---------------------------------------------
+             Pred: ham   Pred: spam
+Actual: ham   10         1
+Actual: spam  1          9
+
+Classification Report
+---------------------------------------------
+              precision    recall  f1-score   support
+
+         ham       0.91      0.91      0.91        11
+        spam       0.90      0.90      0.90        10
+
+    accuracy                           0.90        21
+   macro avg       0.90      0.90      0.90        21
+weighted avg       0.90      0.90      0.90        21
