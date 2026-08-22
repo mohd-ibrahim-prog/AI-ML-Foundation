@@ -1,36 +1,42 @@
 # AI/ML Foundation Program
 
-This repository contains my implementations for the AI/ML Foundation Program.
+A practical AI/ML foundation project covering the complete machine learning workflow from data preparation to deep learning.
 
-The foundation phase is designed to build the core machine learning skills required before moving into the final project.
-
-## Foundation Roadmap
-
-| Week | Topic | Build | Status |
-|------|-------|-------|--------|
-| Week 1 | Pandas, Features & Labels, Data Cleaning | Load and clean a sample dataset | Completed |
-| Week 2 | Linear Regression, Train/Test Split, Evaluation Metrics | Train a regression model | Completed |
-| Week 3 | Text Preprocessing, TF-IDF, Naive Bayes | Build a spam classifier | Completed |
+This repository contains four progressive implementations developed during the AI/ML Foundation Program. Each week focuses on a different stage of the machine learning pipeline, starting with structured data and ending with image classification using a Convolutional Neural Network.
 
 ---
 
-# Week 1 - Data Loading & Cleaning
+## Foundation Journey
 
-## Objective
+| Week | Focus Area | Project |
+|------|------------|---------|
+| Week 1 | Data Preparation | Plant Health Data Cleaning |
+| Week 2 | Machine Learning | Plant Growth Prediction |
+| Week 3 | Natural Language Processing | SMS Spam Classification |
+| Week 4 | Deep Learning & Computer Vision | Plant Disease Detection |
 
-The Week 1 implementation focuses on:
+---
 
-- Pandas fundamentals
-- Understanding features and labels
-- Loading a sample dataset
+# Week 1 — Data Loading & Cleaning
+
+### Focus
+
+The first week establishes the fundamentals required for working with machine learning datasets.
+
+The implementation covers:
+
+- Loading datasets using Pandas
+- Understanding rows, columns and data types
 - Identifying missing values
-- Cleaning the dataset
-- Separating features and labels
-- Generating a cleaning report
+- Cleaning inconsistent data
+- Handling duplicate records
+- Understanding features and labels
+- Preparing processed datasets
+- Generating data-cleaning reports
 
-## Week 1 Dataset
+### Dataset
 
-The dataset contains plant health observations with information such as:
+A plant health dataset containing observations such as:
 
 - Plant ID
 - Temperature
@@ -41,117 +47,123 @@ The dataset contains plant health observations with information such as:
 - Disease
 - Observation Date
 
-The `Disease` column is treated as the label, while the remaining relevant columns are used as features.
+The `Disease` column is treated as the target label, while the remaining relevant attributes are used as input features.
 
-## Week 1 Structure
+### Outcome
 
-```text
-data/
-├── raw/
-└── processed/
+The raw dataset is transformed into a clean and structured dataset suitable for machine learning.
 
-src/
-├── main.py
-├── data_loader.py
-├── data_cleaner.py
-├── feature_label.py
-└── report_generator.py
-
-reports/
-notebooks/
-outputs/
 ---
 
-# Week 3 - Text Preprocessing, TF-IDF & Naive Bayes Spam Classifier
+# Week 2 — Linear Regression
 
-## Objective
+### Focus
 
-The Week 3 implementation focuses on:
+Week 2 introduces supervised machine learning through a regression problem.
 
-- Cleaning and normalizing raw SMS text (lowercasing, removing URLs/punctuation, collapsing whitespace)
-- Handling missing values and duplicate rows before training
-- Converting text into TF-IDF (Term Frequency - Inverse Document Frequency) features
-- Training a Multinomial Naive Bayes classifier for spam detection
-- Splitting data into train/test sets
-- Evaluating the classifier with accuracy, precision, recall, F1-score and a confusion matrix
+The implementation covers:
 
-## Week 3 Dataset
+- Loading a cleaned dataset
+- Selecting features and target variables
+- Train/test splitting
+- Training a Linear Regression model
+- Making predictions
+- Calculating evaluation metrics
+- Saving the trained model
+- Generating prediction outputs and a model report
 
-`week3/data/raw/sms_spam_dataset.csv` is a small, self-contained SMS dataset created for this
-exercise so the project stays reproducible without any external downloads. Each row contains:
+### Model
 
-- `message` - the raw SMS text
-- `label` - `ham` (legitimate) or `spam`
+A Linear Regression model is used to learn the relationship between plant-related input features and the target variable.
 
-The raw file intentionally includes a few missing values, blank messages, and duplicate rows so
-that the missing-value handling and deduplication steps in the pipeline have something real to do.
+### Evaluation
 
-## Week 3 Preprocessing
+The model is evaluated using:
 
-- Missing/blank messages and missing/invalid labels are dropped
-- Duplicate rows are removed
-- Message text is lowercased, URLs are stripped, punctuation/digits are removed, and extra
-  whitespace is collapsed
+- Mean Absolute Error (MAE)
+- Mean Squared Error (MSE)
+- Root Mean Squared Error (RMSE)
+- R² Score
 
-## Week 3 TF-IDF & Naive Bayes
+### Outcome
 
-- `TfidfVectorizer` (scikit-learn) converts the cleaned messages into TF-IDF feature vectors,
-  with English stop words removed
-- `MultinomialNB` (scikit-learn) is trained on the TF-IDF features to classify messages as
-  `ham` or `spam`
-- The vectorizer and classifier are combined into a single scikit-learn `Pipeline` so the exact
-  same TF-IDF vocabulary is reused automatically at prediction time
+This week demonstrates the complete basic machine learning workflow:
 
-## Week 3 Evaluation Metrics
+**Data → Training → Prediction → Evaluation**
 
-The classifier is evaluated on a held-out 20% test split using:
+---
+
+# Week 3 — Text Classification with TF-IDF & Naive Bayes
+
+### Focus
+
+Week 3 introduces Natural Language Processing (NLP) and text classification.
+
+The project builds an SMS spam classifier capable of distinguishing between legitimate (`ham`) and unwanted (`spam`) messages.
+
+### Text Processing
+
+The implementation performs:
+
+- Missing-value handling
+- Duplicate removal
+- Text normalization
+- Lowercasing
+- URL removal
+- Punctuation and digit removal
+- Whitespace normalization
+
+### Feature Extraction
+
+Text messages are converted into numerical machine learning features using:
+
+**TF-IDF — Term Frequency-Inverse Document Frequency**
+
+This allows the machine learning model to work with textual data.
+
+### Machine Learning Model
+
+A **Multinomial Naive Bayes** classifier is trained using the generated TF-IDF features.
+
+The TF-IDF vectorizer and classifier are combined into a single machine learning pipeline.
+
+### Evaluation
+
+The classifier is evaluated using:
 
 - Accuracy
-- Precision (spam)
-- Recall (spam)
-- F1-score (spam)
-- Confusion matrix
+- Precision
+- Recall
+- F1-score
+- Confusion Matrix
 
-On the current dataset the model reaches roughly 90% accuracy, 0.90 precision, 0.90 recall and
-a 0.90 F1-score on the test set (exact numbers can be seen in
-`week3/reports/classification_report.txt` after running the pipeline).
+### Outcome
 
-## Week 3 Structure
+This week demonstrates how raw human language can be transformed into numerical features and used to build a classification model.
+
+---
+
+# Week 4 — Plant Disease Detection Using CNN
+
+### Focus
+
+Week 4 introduces Deep Learning and Computer Vision.
+
+The project builds a Convolutional Neural Network (CNN) capable of classifying plant leaf images into different plant disease categories.
+
+### Dataset
+
+The project uses the **PlantVillage Dataset**.
+
+The dataset contains color images organized into disease/plant classes.
+
+The current dataset contains:
+
+- **38 disease/health classes**
+- Plant leaf images organized by class
+- Color images used for CNN training
+
+The downloaded dataset is stored locally inside:
 
 ```text
-week3/
-data/
-    raw/
-    processed/
-
-src/
-    main.py
-    data_loader.py
-    text_preprocessor.py
-    model_trainer.py
-    model_evaluator.py
-
-models/
-reports/
-outputs/
-```
-
-## How to Run Week 3
-
-Run from the repository root:
-
-```bash
-pip install -r requirements.txt
-python week3/src/main.py
-```
-
-This will:
-
-1. Load and clean `week3/data/raw/sms_spam_dataset.csv`
-2. Preprocess the message text
-3. Split the data into train/test sets
-4. Train the TF-IDF + Naive Bayes pipeline
-5. Evaluate the model and print the results to the console
-6. Save the trained model to `week3/models/spam_classifier.pkl`
-7. Save test predictions to `week3/outputs/predictions.csv`
-8. Save the evaluation report to `week3/reports/classification_report.txt`
+week4/data/raw/PlantVillage/
