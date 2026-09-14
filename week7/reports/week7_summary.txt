@@ -1,0 +1,54 @@
+WEEK 7 - PER-CLASS EVALUATION SUMMARY
+=======================================================
+
+Task: Per-class accuracy - evaluate each disease/class
+Model evaluated: plant_disease_cnn_week6.keras (trained in Week 6)
+
+Total classes evaluated: 38
+
+Per-class results (accuracy = recall for that class):
+-------------------------------------------------------
+Apple___Apple_scab                  accuracy=0.8936  precision=0.9032  recall=0.8936  f1=0.8984  support=94
+Apple___Black_rot                   accuracy=0.9785  precision=0.9479  recall=0.9785  f1=0.9630  support=93
+Apple___Cedar_apple_rust            accuracy=0.8537  precision=0.9722  recall=0.8537  f1=0.9091  support=41
+Apple___healthy                     accuracy=0.8583  precision=0.9636  recall=0.8583  f1=0.9079  support=247
+Blueberry___healthy                 accuracy=0.9956  precision=0.9412  recall=0.9956  f1=0.9676  support=225
+Cherry_(including_sour)___Powdery_mildew accuracy=0.9810  precision=0.9688  recall=0.9810  f1=0.9748  support=158
+Cherry_(including_sour)___healthy   accuracy=0.9609  precision=0.9111  recall=0.9609  f1=0.9354  support=128
+Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot accuracy=0.8961  precision=0.5391  recall=0.8961  f1=0.6732  support=77
+Corn_(maize)___Common_rust_         accuracy=0.9888  precision=0.9944  recall=0.9888  f1=0.9916  support=179
+Corn_(maize)___Northern_Leaf_Blight accuracy=0.6014  precision=0.9175  recall=0.6014  f1=0.7265  support=148
+Corn_(maize)___healthy              accuracy=0.9943  precision=0.9886  recall=0.9943  f1=0.9914  support=174
+Grape___Black_rot                   accuracy=0.9266  precision=0.8632  recall=0.9266  f1=0.8937  support=177
+Grape___Esca_(Black_Measles)        accuracy=0.9469  precision=0.9561  recall=0.9469  f1=0.9515  support=207
+Grape___Leaf_blight_(Isariopsis_Leaf_Spot) accuracy=0.9627  precision=0.9281  recall=0.9627  f1=0.9451  support=161
+Grape___healthy                     accuracy=0.9524  precision=1.0000  recall=0.9524  f1=0.9756  support=63
+Orange___Haunglongbing_(Citrus_greening) accuracy=0.9976  precision=0.9952  recall=0.9976  f1=0.9964  support=826
+Peach___Bacterial_spot              accuracy=0.9304  precision=0.9386  recall=0.9304  f1=0.9345  support=345
+Peach___healthy                     accuracy=0.9259  precision=0.9091  recall=0.9259  f1=0.9174  support=54
+Pepper,_bell___Bacterial_spot       accuracy=0.9200  precision=0.8263  recall=0.9200  f1=0.8707  support=150
+Pepper,_bell___healthy              accuracy=0.9910  precision=0.8118  recall=0.9910  f1=0.8925  support=222
+Potato___Early_blight               accuracy=0.9867  precision=0.7872  recall=0.9867  f1=0.8757  support=150
+Potato___Late_blight                accuracy=0.8400  precision=0.8182  recall=0.8400  f1=0.8289  support=150
+Potato___healthy                    accuracy=0.7826  precision=0.9000  recall=0.7826  f1=0.8372  support=23
+Raspberry___healthy                 accuracy=0.9286  precision=0.9286  recall=0.9286  f1=0.9286  support=56
+Soybean___healthy                   accuracy=0.9529  precision=0.9681  recall=0.9529  f1=0.9604  support=764
+Squash___Powdery_mildew             accuracy=0.9855  precision=0.9783  recall=0.9855  f1=0.9819  support=275
+Strawberry___Leaf_scorch            accuracy=0.9880  precision=0.9162  recall=0.9880  f1=0.9507  support=166
+Strawberry___healthy                accuracy=1.0000  precision=0.9714  recall=1.0000  f1=0.9855  support=68
+Tomato___Bacterial_spot             accuracy=0.8966  precision=0.9761  recall=0.8966  f1=0.9346  support=319
+Tomato___Early_blight               accuracy=0.6400  precision=0.8972  recall=0.6400  f1=0.7471  support=150
+Tomato___Late_blight                accuracy=0.7483  precision=0.9030  recall=0.7483  f1=0.8184  support=286
+Tomato___Leaf_Mold                  accuracy=0.7902  precision=0.9040  recall=0.7902  f1=0.8433  support=143
+Tomato___Septoria_leaf_spot         accuracy=0.9060  precision=0.8114  recall=0.9060  f1=0.8561  support=266
+Tomato___Spider_mites Two-spotted_spider_mite accuracy=0.8805  precision=0.9485  recall=0.8805  f1=0.9132  support=251
+Tomato___Target_Spot                accuracy=0.8720  precision=0.8326  recall=0.8720  f1=0.8519  support=211
+Tomato___Tomato_Yellow_Leaf_Curl_Virus accuracy=0.9900  precision=0.9803  recall=0.9900  f1=0.9851  support=804
+Tomato___Tomato_mosaic_virus        accuracy=0.9821  precision=0.9821  recall=0.9821  f1=0.9821  support=56
+Tomato___healthy                    accuracy=0.9456  precision=0.9912  recall=0.9456  f1=0.9679  support=239
+
+Strongest class:
+  Orange___Haunglongbing_(Citrus_greening)  (F1-score: 0.9964, per-class accuracy: 0.9976)
+
+Weakest class:
+  Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot  (F1-score: 0.6732, per-class accuracy: 0.8961)
