@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Plant Disease Classifier</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main class="card">
+    <header>
+      <h1>🌿 Plant Disease Classifier</h1>
+      <p class="subtitle">Upload a photo of a plant leaf and the model will predict its disease class.</p>
+    </header>
+
+    <form id="upload-form">
+      <label for="image" class="dropzone" id="dropzone">
+        <span id="dropzone-text">Tap to choose or take a photo<br><small>JPG or PNG, up to {{ max_mb }} MB</small></span>
+        <img id="preview" alt="Selected leaf preview" hidden>
+      </label>
+      <input type="file" id="image" name="image" accept="image/jpeg,image/png">
+
+      <button type="submit" id="predict-btn">Predict</button>
+    </form>
+
+    <div id="loading" class="loading" hidden>
+      <div class="spinner"></div>
+      <span>Analysing image… the first request may take a little longer.</span>
+    </div>
+
+    <div id="error" class="error" role="alert" hidden></div>
+
+    <section id="result" class="result" hidden>
+      <p class="result-label">Predicted class</p>
+      <h2 id="result-name"></h2>
+      <p class="confidence"><span id="result-conf"></span>% confidence</p>
+      <div class="bar"><div id="result-bar"></div></div>
+      <div id="top3"></div>
+    </section>
+
+    <p class="note">
+      This is an AI-based plant disease classification demonstration built for the
+      AI/ML Foundation Program. It is a CNN trained on the PlantVillage dataset
+      (38 classes) and is not a substitute for advice from an agricultural expert.
+      Results are most reliable for clear, single-leaf photos similar to the dataset.
+    </p>
+  </main>
+
+  <footer>AI/ML Foundation Program · Week 8 · Flask + TensorFlow/Keras</footer>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

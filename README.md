@@ -1,8 +1,8 @@
 # AI/ML Foundation Program
 
-A practical AI/ML foundation project covering the complete machine learning workflow from data preparation and traditional machine learning to Natural Language Processing, Deep Learning, Computer Vision, model evaluation, and per-class performance analysis.
+A practical AI/ML foundation project covering the complete machine learning workflow from data preparation and traditional machine learning to Natural Language Processing, Deep Learning, Computer Vision, model evaluation, per-class performance analysis, and deployment of a trained AI model as a mobile-friendly web application.
 
-This repository contains seven progressive implementations developed during the AI/ML Foundation Program. Each week builds on the previous concepts and gradually moves from basic data preparation to image classification using Convolutional Neural Networks.
+This repository contains eight progressive implementations developed during the AI/ML Foundation Program. Each week builds on the previous concepts and gradually moves from basic data preparation to machine learning, NLP, deep learning, computer vision, model evaluation, and finally deployment of the trained plant disease classifier as a web application.
 
 ---
 
@@ -17,6 +17,7 @@ This repository contains seven progressive implementations developed during the 
 | Week 5 | Image Model Training & Validation | Plant Disease CNN — Training & Validation |
 | Week 6 | Model Evaluation & Improvement | Plant Disease CNN — Test Evaluation & Improvement |
 | Week 7 | Per-Class Evaluation | Plant Disease CNN — Per-Class Accuracy |
+| Week 8 | Deployment | Mobile-Friendly Plant Disease Detection Web App |
 
 ---
 
@@ -311,6 +312,12 @@ Evaluation includes:
 
 The test set is not used during model training.
 
+## Recorded Result
+
+The Week 6 model achieved a recorded test accuracy of approximately **92.89%** on the held-out PlantVillage test set used by the project.
+
+This result applies to the project dataset and evaluation setup. Real-world photographs may produce different results because of differences in lighting, backgrounds, image quality, and other conditions.
+
 ## Outcome
 
 Week 6 demonstrates the difference between training, validation, and testing.
@@ -383,164 +390,94 @@ Week 7 provides a more detailed understanding of model performance and helps ide
 
 ---
 
-# Complete AI/ML Learning Progression
+# Week 8 — Mobile-Friendly Deployment
 
-The seven weeks together demonstrate a progressive AI/ML workflow:
+## Focus
+
+Week 8 converts the trained plant disease classification model into a simple **mobile-friendly web application**.
+
+The goal is to make the trained AI model accessible through a browser instead of requiring the user to run Python commands directly.
+
+The application allows a user to:
+
+1. Select or take a plant leaf photograph.
+2. Upload the image.
+3. Send the image to the trained CNN.
+4. Receive the predicted plant disease class.
+5. View the confidence percentage.
+6. View the top three predicted classes.
+
+The model is **not retrained in Week 8**.
+
+The application uses the trained model produced and evaluated in Week 6.
+
+---
+
+## Web Application
+
+The Week 8 application is built using **Flask**.
+
+The application contains:
+
+- Flask backend
+- HTML interface
+- CSS styling
+- JavaScript for browser interaction
+- Image upload and preview
+- Image validation
+- CNN prediction
+- Confidence display
+- Top-3 predictions
+- Error handling
+- Health-check endpoint
+
+The application is designed to be usable from a desktop browser as well as a mobile browser.
+
+---
+
+## Model Used
+
+The deployed application uses:
+
+`week6/models/plant_disease_cnn_week6.keras`
+
+The Week 6 model is used because it is the improved CNN model that was evaluated on the held-out test set and subsequently used by Week 7 for per-class evaluation.
+
+The deployment therefore follows:
+
+**Week 6 → Trained & Evaluated Model**
+
+**Week 7 → Detailed Model Analysis**
+
+**Week 8 → Deployment of the Evaluated Model**
+
+---
+
+## Prediction Workflow
+
+The complete Week 8 prediction workflow is:
 
 ```text
-Week 1
-Data Loading & Cleaning
-        ↓
-Week 2
-Linear Regression
-        ↓
-Week 3
-NLP + TF-IDF + Naive Bayes
-        ↓
-Week 4
-CNN + Image Classification
-        ↓
-Week 5
-Training + Validation
-        ↓
-Week 6
-Model Improvement + Test Evaluation
-        ↓
-Week 7
-Per-Class Accuracy & Detailed Evaluation
-```
-
----
-
-# Technologies Used
-
-The project uses Python and common AI/ML libraries, including:
-
-- Python
-- Pandas
-- NumPy
-- Scikit-learn
-- TensorFlow
-- Keras
-- Matplotlib
-- Joblib
-- Hugging Face Datasets
-
----
-
-# Repository Structure
-
-```text
-AI-ML-Foundation/
-│
-├── week1/
-│   ├── data/
-│   ├── notebook/
-│   ├── outputs/
-│   ├── reports/
-│   └── src/
-│
-├── week2/
-│   ├── data/
-│   ├── models/
-│   ├── outputs/
-│   ├── reports/
-│   └── src/
-│
-├── week3/
-│   ├── data/
-│   ├── models/
-│   ├── outputs/
-│   ├── reports/
-│   └── src/
-│
-├── week4/
-│   ├── data/
-│   ├── models/
-│   ├── outputs/
-│   ├── reports/
-│   └── src/
-│
-├── week5/
-│   ├── data/
-│   ├── models/
-│   ├── outputs/
-│   ├── reports/
-│   └── src/
-│
-├── week6/
-│   ├── data/
-│   ├── models/
-│   ├── outputs/
-│   ├── reports/
-│   └── src/
-│
-├── week7/
-│   ├── data/
-│   ├── models/
-│   ├── outputs/
-│   ├── reports/
-│   └── src/
-│
-├── .gitignore
-├── requirements.txt
-├── CITATION.cff
-└── README.md
-```
-
----
-
-# Dataset & Model Files
-
-Large datasets and generated files are intentionally excluded from version control where appropriate.
-
-The PlantVillage dataset is expected to be available locally for Weeks 4–7.
-
-Week 5, Week 6 and Week 7 reuse the dataset instead of storing duplicate copies.
-
-Week 7 also reuses the trained model produced by Week 6.
-
----
-
-# Running the Projects
-
-Install the required dependencies:
-
-```powershell
-pip install -r requirements.txt
-```
-
-Each week contains its own source files and execution workflow.
-
-For example:
-
-```powershell
-cd week5/src
-python main.py
-```
-
-For Week 6:
-
-```powershell
-cd week6/src
-python main.py
-```
-
-For Week 7:
-
-```powershell
-cd week7/src
-python main.py
-```
-
-Week 7 should be executed after Week 6 because it uses the model generated by Week 6.
-
----
-
-# Learning Outcome
-
-By completing all seven weeks, the project demonstrates the progression from basic data handling to a complete deep learning evaluation workflow:
-
-**Data Preparation → Machine Learning → NLP → Deep Learning → Image Classification → Validation → Model Improvement → Test Evaluation → Per-Class Analysis**
-
-This provides practical exposure to the major stages of a basic AI/ML development pipeline.
+User selects/takes leaf image
+            ↓
+Image uploaded through browser
+            ↓
+File validation
+            ↓
+Image opened and verified
+            ↓
+RGB conversion
+            ↓
+Resize to 128 × 128
+            ↓
+Convert to float32
+            ↓
+Pixel values divided by 255
+            ↓
+CNN model prediction
+            ↓
+Softmax probabilities
+            ↓
+Top prediction + Top 3 predictions
+            ↓
+Confidence displayed in web interface
