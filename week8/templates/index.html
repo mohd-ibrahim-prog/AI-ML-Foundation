@@ -1,53 +1,785 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Plant Disease Classifier</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="AI-assisted plant disease analysis using a CNN-based image classification system."
+    >
+
+    <title>LeafGuard AI — Plant Disease Analyzer</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
 </head>
+
 <body>
-  <main class="card">
-    <header>
-      <h1>🌿 Plant Disease Classifier</h1>
-      <p class="subtitle">Upload a photo of a plant leaf and the model will predict its disease class.</p>
-    </header>
 
-    <form id="upload-form">
-      <label for="image" class="dropzone" id="dropzone">
-        <span id="dropzone-text">Tap to choose or take a photo<br><small>JPG or PNG, up to {{ max_mb }} MB</small></span>
-        <img id="preview" alt="Selected leaf preview" hidden>
-      </label>
-      <input type="file" id="image" name="image" accept="image/jpeg,image/png">
+    <!-- Background decoration -->
+    <div class="background-glow glow-one"></div>
+    <div class="background-glow glow-two"></div>
 
-      <button type="submit" id="predict-btn">Predict</button>
-    </form>
+    <main class="app-shell">
 
-    <div id="loading" class="loading" hidden>
-      <div class="spinner"></div>
-      <span>Analysing image… the first request may take a little longer.</span>
-    </div>
+        <!-- =========================================================
+             HEADER
+        ========================================================== -->
 
-    <div id="error" class="error" role="alert" hidden></div>
+        <header class="topbar">
 
-    <section id="result" class="result" hidden>
-      <p class="result-label">Predicted class</p>
-      <h2 id="result-name"></h2>
-      <p class="confidence"><span id="result-conf"></span>% confidence</p>
-      <div class="bar"><div id="result-bar"></div></div>
-      <div id="top3"></div>
-    </section>
+            <div class="brand">
 
-    <p class="note">
-      This is an AI-based plant disease classification demonstration built for the
-      AI/ML Foundation Program. It is a CNN trained on the PlantVillage dataset
-      (38 classes) and is not a substitute for advice from an agricultural expert.
-      Results are most reliable for clear, single-leaf photos similar to the dataset.
-    </p>
-  </main>
+                <div class="brand-mark">
+                    <span>🌿</span>
+                </div>
 
-  <footer>AI/ML Foundation Program · Week 8 · Flask + TensorFlow/Keras</footer>
+                <div class="brand-text">
+                    <strong>LeafGuard</strong>
+                    <span>AI Plant Analysis</span>
+                </div>
 
-  <script src="{{ url_for('static', filename='script.js') }}"></script>
+            </div>
+
+            <div class="system-status">
+                <span class="status-dot"></span>
+                <span>AI system ready</span>
+            </div>
+
+        </header>
+
+
+        <!-- =========================================================
+             HERO
+        ========================================================== -->
+
+        <section class="hero">
+
+            <div class="hero-eyebrow">
+                <span class="eyebrow-icon">✦</span>
+                AI / ML FOUNDATION 
+            </div>
+
+            <h1>
+                Understand your
+                <span>plant's health.</span>
+            </h1>
+
+            <p class="hero-description">
+                Upload a clear plant-leaf image and our AI pipeline will
+                check image quality, verify plant content, and determine
+                whether the model has enough evidence to provide a result.
+            </p>
+
+        </section>
+
+
+        <!-- =========================================================
+             MAIN ANALYZER
+        ========================================================== -->
+
+        <section class="analyzer-card">
+
+            <div class="card-header">
+
+                <div>
+                    <span class="section-label">IMAGE ANALYSIS</span>
+
+                    <h2>
+                        Analyze a plant image
+                    </h2>
+                </div>
+
+                <div class="security-badge">
+                    <span>✓</span>
+                    Validation enabled
+                </div>
+
+            </div>
+
+
+            <!-- =====================================================
+                 UPLOAD AREA
+            ====================================================== -->
+
+            <form id="upload-form">
+
+                <label
+                    for="image"
+                    class="upload-zone"
+                    id="dropzone"
+                >
+
+                    <div
+                        class="upload-content"
+                        id="dropzone-empty"
+                    >
+
+                        <div class="upload-icon-wrapper">
+                            <div class="upload-icon">
+                                ↑
+                            </div>
+                        </div>
+
+                        <h3>
+                            Upload a plant image
+                        </h3>
+
+                        <p>
+                            Drag and drop your image here,
+                            or <strong>browse files</strong>
+                        </p>
+
+                        <div class="upload-meta">
+
+                            <span>
+                                JPG
+                            </span>
+
+                            <span>
+                                PNG
+                            </span>
+
+                            <span>
+                                Up to {{ max_mb }} MB
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Preview -->
+                    <div
+                        class="preview-container"
+                        id="preview-container"
+                        hidden
+                    >
+
+                        <img
+                            id="preview"
+                            alt="Selected plant image preview"
+                        >
+
+                        <div class="preview-overlay">
+
+                            <div class="preview-file-info">
+
+                                <span class="preview-check">
+                                    ✓
+                                </span>
+
+                                <div>
+                                    <strong id="preview-file-name">
+                                        Image selected
+                                    </strong>
+
+                                    <small id="preview-file-size">
+                                        Ready for analysis
+                                    </small>
+                                </div>
+
+                            </div>
+
+                            <span class="change-image">
+                                Change image
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </label>
+
+
+                <input
+                    type="file"
+                    id="image"
+                    name="image"
+                    accept="image/jpeg,image/png"
+                    hidden
+                >
+
+
+                <!-- =================================================
+                     ANALYZE BUTTON
+                ================================================== -->
+
+                <button
+                    type="submit"
+                    id="predict-btn"
+                    class="analyze-button"
+                    disabled
+                >
+
+                    <span class="button-icon">
+                        ✦
+                    </span>
+
+                    <span>
+                        Analyze image
+                    </span>
+
+                    <span class="button-arrow">
+                        →
+                    </span>
+
+                </button>
+
+            </form>
+
+
+            <!-- =====================================================
+                 LOADING
+            ====================================================== -->
+
+            <div
+                id="loading"
+                class="analysis-loading"
+                hidden
+            >
+
+                <div class="loading-orbit">
+
+                    <div class="loading-spinner"></div>
+
+                </div>
+
+                <div class="loading-text">
+
+                    <strong>
+                        Analyzing your image
+                    </strong>
+
+                    <span>
+                        Checking quality, plant content and model confidence...
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- =====================================================
+                 ERROR
+            ====================================================== -->
+
+            <div
+                id="error"
+                class="result-card result-error"
+                role="alert"
+                hidden
+            >
+
+                <div class="result-icon">
+                    !
+                </div>
+
+                <div class="result-content">
+
+                    <span class="result-kicker">
+                        ANALYSIS ERROR
+                    </span>
+
+                    <h3>
+                        Something went wrong
+                    </h3>
+
+                    <p id="error-text"></p>
+
+                    <button
+                        type="button"
+                        class="small-action-button"
+                        id="error-retry-btn"
+                    >
+                        Try again
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- =====================================================
+                 CLEAR RESULT
+            ====================================================== -->
+
+            <div
+                id="result-clear"
+                class="result-card result-success"
+                hidden
+            >
+
+                <div class="result-icon success-icon">
+                    ✓
+                </div>
+
+                <div class="result-content">
+
+                    <span class="result-kicker">
+                        ANALYSIS RESULT
+                    </span>
+
+                    <div class="result-heading-row">
+
+                        <div>
+                            <h3>
+                                Plant condition detected
+                            </h3>
+
+                            <h2 id="result-name">
+                                —
+                            </h2>
+                        </div>
+
+                        <div class="confidence-pill">
+                            <span>Confidence</span>
+                            <strong>
+                                <span id="result-conf">0</span>%
+                            </strong>
+                        </div>
+
+                    </div>
+
+
+                    <!-- Confidence -->
+                    <div class="confidence-section">
+
+                        <div class="confidence-header">
+
+                            <span>
+                                Model confidence
+                            </span>
+
+                            <strong>
+                                <span id="confidence-label">
+                                    0
+                                </span>%
+                            </strong>
+
+                        </div>
+
+                        <div class="confidence-track">
+                            <div
+                                id="result-bar"
+                                class="confidence-progress"
+                            ></div>
+                        </div>
+
+                    </div>
+
+
+                    <!-- Evidence -->
+                    <details class="evidence-panel">
+
+                        <summary>
+                            <span>
+                                Why did the system return this result?
+                            </span>
+
+                            <span class="summary-arrow">
+                                ↓
+                            </span>
+                        </summary>
+
+                        <ul id="evidence-list"></ul>
+
+                    </details>
+
+
+                    <!-- Top 3 -->
+                    <div class="alternatives">
+
+                        <div class="alternatives-header">
+
+                            <span class="result-kicker">
+                                MODEL ALTERNATIVES
+                            </span>
+
+                            <span>
+                                Top predictions
+                            </span>
+
+                        </div>
+
+                        <div id="top3"></div>
+
+                    </div>
+
+
+                    <!-- Disclaimer -->
+                    <div class="important-note">
+
+                        <span class="note-icon">
+                            i
+                        </span>
+
+                        <p>
+                            This result represents the model's confidence
+                            among its supported PlantVillage classes. It is
+                            not a professional agricultural diagnosis and
+                            confidence does not guarantee correctness.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =====================================================
+                 WITHHELD RESULT
+            ====================================================== -->
+
+            <div
+                id="result-withheld"
+                class="result-card result-withheld"
+                hidden
+            >
+
+                <div
+                    class="result-icon withheld-icon"
+                    id="withheld-icon"
+                >
+                    ?
+                </div>
+
+                <div class="result-content">
+
+                    <span class="result-kicker">
+                        RESULT WITHHELD
+                    </span>
+
+                    <h3>
+                        We didn't make a diagnosis
+                    </h3>
+
+                    <div
+                        id="withheld-reason-label"
+                        class="withheld-reason"
+                    ></div>
+
+                    <p
+                        id="withheld-text"
+                        class="withheld-description"
+                    ></p>
+
+
+                    <details
+                        class="evidence-panel"
+                        id="withheld-evidence-wrap"
+                        hidden
+                    >
+
+                        <summary>
+                            <span>
+                                Technical analysis
+                            </span>
+
+                            <span class="summary-arrow">
+                                ↓
+                            </span>
+
+                        </summary>
+
+                        <ul id="withheld-evidence-list"></ul>
+
+                    </details>
+
+
+                    <div class="safe-message">
+
+                        <span>✓</span>
+
+                        <p>
+                            Withholding an unreliable prediction is
+                            intentional. The system should not invent a
+                            disease when the image cannot be analyzed
+                            reliably.
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        id="try-again-btn"
+                        class="secondary-action"
+                    >
+                        Analyze another image
+                        <span>→</span>
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================================================
+             HOW IT WORKS
+        ========================================================== -->
+
+        <section class="process-section">
+
+            <div class="section-heading">
+
+                <span class="section-label">
+                    HOW IT WORKS
+                </span>
+
+                <h2>
+                    The image goes through multiple checks
+                </h2>
+
+                <p>
+                    The system does not directly trust the CNN prediction.
+                    It first checks whether the image is suitable for analysis.
+                </p>
+
+            </div>
+
+
+            <div class="process-grid">
+
+                <article class="process-card">
+
+                    <div class="process-number">
+                        01
+                    </div>
+
+                    <div class="process-icon">
+                        ◌
+                    </div>
+
+                    <h3>
+                        Image quality
+                    </h3>
+
+                    <p>
+                        Checks image size, brightness and sharpness before
+                        attempting classification.
+                    </p>
+
+                </article>
+
+
+                <article class="process-card">
+
+                    <div class="process-number">
+                        02
+                    </div>
+
+                    <div class="process-icon">
+                        ◈
+                    </div>
+
+                    <h3>
+                        Plant verification
+                    </h3>
+
+                    <p>
+                        Attempts to reject obvious non-plant images such
+                        as cars, laptops and unrelated objects.
+                    </p>
+
+                </article>
+
+
+                <article class="process-card">
+
+                    <div class="process-number">
+                        03
+                    </div>
+
+                    <div class="process-icon">
+                        ✦
+                    </div>
+
+                    <h3>
+                        Model analysis
+                    </h3>
+
+                    <p>
+                        The CNN evaluates the image against its supported
+                        PlantVillage disease classes.
+                    </p>
+
+                </article>
+
+
+                <article class="process-card">
+
+                    <div class="process-number">
+                        04
+                    </div>
+
+                    <div class="process-icon">
+                        ✓
+                    </div>
+
+                    <h3>
+                        Reliability check
+                    </h3>
+
+                    <p>
+                        Confidence, prediction spread and consistency are
+                        considered before showing a classification.
+                    </p>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================================================
+             MODEL INFORMATION
+        ========================================================== -->
+
+        <section class="model-section">
+
+            <div class="model-header">
+
+                <div>
+
+                    <span class="section-label">
+                        MODEL INFORMATION
+                    </span>
+
+                    <h2>
+                        Built for responsible AI experimentation
+                    </h2>
+
+                </div>
+
+                <div class="model-chip">
+                    CNN
+                </div>
+
+            </div>
+
+
+            <div class="model-stats">
+
+                <div class="model-stat">
+
+                    <span>
+                        Dataset
+                    </span>
+
+                    <strong>
+                        PlantVillage
+                    </strong>
+
+                </div>
+
+
+                <div class="model-stat">
+
+                    <span>
+                        Supported classes
+                    </span>
+
+                    <strong>
+                        {{ num_classes }}
+                    </strong>
+
+                </div>
+
+
+                <div class="model-stat">
+
+                    <span>
+                        Framework
+                    </span>
+
+                    <strong>
+                        TensorFlow / Keras
+                    </strong>
+
+                </div>
+
+
+                <div class="model-stat">
+
+                    <span>
+                        Interface
+                    </span>
+
+                    <strong>
+                        Flask Web App
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <details class="supported-classes">
+
+                <summary>
+
+                    <span>
+                        View supported classes
+                    </span>
+
+                    <span class="summary-arrow">
+                        ↓
+                    </span>
+
+                </summary>
+
+                <div class="class-grid">
+
+                    {% for c in supported_classes %}
+
+                    <div class="class-item">
+                        <span>•</span>
+                        {{ c.label }}
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </details>
+
+        </section>
+
+
+        <!-- =========================================================
+             FOOTER
+        ========================================================== -->
+
+        <footer>
+
+            <div class="footer-brand">
+                🌿 LeafGuard AI
+            </div>
+
+            <p>
+                AI/ML Foundation Program
+            </p>
+
+            <span>
+                CNN · Flask · TensorFlow/Keras
+            </span>
+
+        </footer>
+
+    </main>
+
+
+    <!-- JavaScript -->
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
 </body>
 </html>
