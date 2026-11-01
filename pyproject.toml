@@ -1,0 +1,3 @@
+
+[tool.vercel]
+entrypoint = "week8.app:app"
