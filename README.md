@@ -1,171 +1,248 @@
-# AI-Powered Plant Disease Detection & Analysis System
+# LeafGuard AI — Plant Disease Detection & Analysis System
 
-> A CNN-based plant leaf analysis system with a validation and uncertainty-aware decision layer. It can **accept** a prediction, or **withhold** it and explain why.
+> An AI-powered plant leaf analysis application built using Convolutional Neural Networks (CNN), TensorFlow/Keras and Flask. The system combines image validation, quality analysis, plant-content screening and uncertainty-aware prediction decisions to help determine whether an uploaded leaf image provides sufficient evidence for a classification.
 
-![Phase](https://img.shields.io/badge/Phase-Capstone%20Scope%20Finalization-blue)
+![Project Phase](https://img.shields.io/badge/Phase-Working%20Prototype-2E8B57)
 ![Python](https://img.shields.io/badge/Python-3.x-3776AB?logo=python&logoColor=white)
 ![Flask](https://img.shields.io/badge/Backend-Flask-black?logo=flask)
-![TensorFlow](https://img.shields.io/badge/Model-TensorFlow%20%2F%20Keras-FF6F00?logo=tensorflow&logoColor=white)
+![TensorFlow](https://img.shields.io/badge/Deep%20Learning-TensorFlow%20%2F%20Keras-FF6F00?logo=tensorflow&logoColor=white)
 ![Dataset](https://img.shields.io/badge/Dataset-PlantVillage-2E8B57)
-![Deployment](https://img.shields.io/badge/Deployment-Planned%3A%20Render-lightgrey)
+![Frontend](https://img.shields.io/badge/Frontend-HTML%20%7C%20CSS%20%7C%20JavaScript-orange)
+![Deployment](https://img.shields.io/badge/Deployment-Render%20Planned-lightgrey)
 
 ---
 
-## Contents
+## Table of Contents
 
-1. [Overview](#1-overview)
-2. [Problem Statement](#2-problem-statement)
-3. [Objectives](#3-objectives)
-4. [How the System Works](#4-how-the-system-works)
-5. [Dataset and Supported Classes](#5-dataset-and-supported-classes)
-6. [CNN Model and Training](#6-cnn-model-and-training)
-7. [Model Evaluation](#7-model-evaluation)
-8. [Reliability and Decision Layer](#8-reliability-and-decision-layer)
-9. [Web Application](#9-web-application)
-10. [Project Structure](#10-project-structure)
-11. [Capstone Scope, Prototype and Deployment](#11-capstone-scope-prototype-and-deployment)
-12. [Demonstration and Testing Plan](#12-demonstration-and-testing-plan)
-13. [Limitations and Responsible Use](#13-limitations-and-responsible-use)
-14. [Skills Used](#14-skills-used)
-15. [Future Scope](#15-future-scope)
-16. [Roadmap and Current Status](#16-roadmap-and-current-status)
-17. [Conclusion](#17-conclusion)
-18. [Disclaimer](#18-disclaimer)
+1. Project Overview
+2. Problem Statement
+3. Project Objectives
+4. Key Features
+5. System Workflow
+6. Dataset and Supported Classes
+7. CNN Model and Training
+8. Model Evaluation
+9. Image Validation and Reliability Layer
+10. Technology Stack
+11. Application Architecture
+12. Project Structure
+13. Installation and Setup
+14. Running the Application
+15. Testing and Validation
+16. Deployment
+17. Limitations and Responsible Use
+18. Skills and Concepts Applied
+19. Future Enhancements
+20. Development Roadmap
+21. Current Project Status
+22. Conclusion
+23. Disclaimer
 
 ---
 
-## Status Legend
+## 1. Project Overview
 
-| Tag | Meaning |
+**LeafGuard AI** is an AI-powered plant disease detection and analysis system designed to analyze plant leaf images using deep learning and computer vision techniques.
+
+The project uses a Convolutional Neural Network (CNN) trained on the PlantVillage dataset to classify images into 38 supported plant health and disease categories.
+
+Unlike a basic image classifier that always returns the class with the highest probability, LeafGuard AI is designed with an additional validation and decision-making layer.
+
+This layer examines image quality, plant-like visual content, prediction confidence, prediction margin, entropy and prediction consistency.
+
+The system aims to make one of two decisions:
+
+- **Accept Prediction:** Display the predicted plant condition when the available evidence satisfies the configured decision criteria.
+- **Withhold Prediction:** Avoid displaying an unsupported classification when the image or prediction does not meet those criteria.
+
+The main principle behind the project is:
+
+> A machine learning model should not be forced to provide a prediction when the available evidence is insufficient.
+
+### Project Information
+
+| Item | Description |
 |---|---|
-| **CURRENT** | Developed in the earlier AI/ML work and carried into this repository as the project basis |
-| **PLANNED** | Targeted for the Capstone (prototype, deployment, demo) |
-| **FUTURE** | Ideas for later. Not implemented, not promised |
-
-> The project is in the **Capstone Scope Finalization** phase. The working prototype is the next milestone. Deployment is **planned, not completed**.
-
----
-
-## 1. Overview
-
-This project uses a **Convolutional Neural Network (CNN)** trained on the **PlantVillage** dataset to classify plant leaf images into **38 plant health and disease classes**.
-
-It goes beyond a basic classifier. A normal classifier always returns one of its known classes, even when the image is a car, a laptop, a person, a blurry photo, a very dark photo, or an unsupported plant or disease. A high softmax probability does **not** mean the prediction is correct. It only means one of the 38 known classes received the largest share of probability.
-
-This project adds a validation and decision layer around the CNN, built on one idea:
-
-> **"Do not force the model to make a prediction when the available evidence is not reliable enough."**
-
-The central question the system asks of every image:
-
-> **"Does the system have enough evidence to provide a plant disease prediction for this particular image?"**
-
----
+| Project Name | LeafGuard AI |
+| Project Title | AI-Powered Plant Disease Detection & Analysis System |
+| Project Domain | Artificial Intelligence, Machine Learning and Computer Vision |
+| Main Approach | CNN-based Image Classification |
+| Dataset | PlantVillage |
+| Backend | Python and Flask |
+| Frontend | HTML, CSS and JavaScript |
+| Deep Learning Framework | TensorFlow / Keras |
+| Current Development Stage | Working Local Web Prototype |
+| Deployment Target | Render |
+| Project Type | Academic AI/ML Project |
 
 ## 2. Problem Statement
 
-A CNN trained on PlantVillage expects inputs from a similar visual domain. Real users upload arbitrary images, and a standard classifier may still assign one of its 38 classes to an unrelated or unreliable image. That is a **reliability problem**.
+Plant diseases can affect agricultural productivity and crop quality. Identifying disease symptoms from leaf images is one potential application of computer vision and deep learning.
 
-| Term | Meaning here |
+However, a standard image classification model has an important limitation.
+
+A CNN trained on a fixed dataset generally selects one of its known output classes even when the uploaded image is unrelated to its training data.
+
+For example, a user might upload:
+
+- A clear plant leaf image.
+- A blurry or dark leaf image.
+- A photograph of a person.
+- An image of a vehicle.
+- An unsupported plant species.
+- A leaf with an unsupported disease.
+
+A conventional classifier may still return one of its trained classes.
+
+The highest softmax probability does not guarantee that the classification is correct.
+
+Therefore, this project introduces additional image validation and prediction reliability checks before presenting a classification.
+
+**The problem addressed by LeafGuard AI is not only how to classify an image, but also how to evaluate whether a classification should be presented at all.**
+
+## 3. Project Objectives
+
+The major objectives are:
+
+1. Develop a CNN-based plant disease classification system.
+2. Use the PlantVillage dataset for supervised image classification.
+3. Train and evaluate a deep learning model across 38 supported classes.
+4. Apply image preprocessing consistently during training and inference.
+5. Develop a browser-based application for uploading plant leaf images.
+6. Implement file validation and image-quality analysis.
+7. Examine plant-like visual content using a lightweight screening approach.
+8. Analyze prediction confidence and the difference between the top predictions.
+9. Examine prediction uncertainty using entropy.
+10. Evaluate prediction consistency across modified image inputs.
+11. Introduce an uncertainty-aware decision layer.
+12. Provide explanations when a prediction is withheld.
+13. Integrate the trained model with a Flask backend.
+14. Test the complete image-upload and prediction workflow.
+15. Prepare the application for public deployment.
+
+## 4. Key Features
+
+### 4.1 Web-Based Image Analysis
+
+- Browser-based application.
+- Plant leaf image upload.
+- Image preview.
+- User-friendly analysis interface.
+- Responsive visual layout.
+
+### 4.2 CNN-Based Classification
+
+- Deep learning model using TensorFlow/Keras.
+- PlantVillage-based classification.
+- 38 supported output categories.
+- Prediction confidence analysis.
+
+### 4.3 Image Validation
+
+- File-format validation.
+- Image decoding checks.
+- Image dimensions and size checks.
+- Image-quality analysis.
+
+### 4.4 Reliability and Uncertainty Analysis
+
+The project includes separate components for:
+
+- Image-quality checking.
+- Plant-content screening.
+- Model loading.
+- Prediction processing.
+- Uncertainty and domain-related decision analysis.
+
+### 4.5 Prediction Decision
+
+The system is designed around two possible outcomes:
+
+| Outcome | Description |
 |---|---|
-| **Classification** | Assigning an image to one of the known classes |
-| **Confidence** | The softmax probability of the top class. It is not the real-world chance of being correct |
-| **Uncertainty** | How spread out or ambiguous the model output is |
-| **Supported domain** | Leaf images of the 38 supported plant/condition classes |
-| **Unsupported input** | Non-plant images, other species or diseases, poor-quality images, or images far from the training data |
+| Accepted | A prediction is displayed when configured decision criteria are satisfied. |
+| Withheld | A prediction is not presented when the available evidence is insufficient. |
 
-The additional checks are **heuristic signals**. They **attempt to identify** unreliable inputs and **help reduce** misleading predictions. When evidence is weak, the **prediction may be withheld**.
+The exact behavior and reliability of each decision must be established through application testing.
 
-> This project does **not** claim to solve out-of-distribution (OOD) detection.
+## 5. System Workflow
 
----
+The overall system follows this pipeline:
 
-## 3. Objectives
-
-1. Classify plant leaf images into 38 supported classes using PlantVillage.
-2. Build, train, and evaluate a CNN with a train/validation/test split.
-3. Evaluate with accuracy, precision, recall, F1, confusion matrix, and per-class analysis.
-4. Build a browser-based app for desktop and mobile with image upload.
-5. Validate files and analyze image quality (size, blur, brightness, contrast).
-6. Screen for plant-like content using a lightweight color heuristic.
-7. Analyze confidence, prediction margin, entropy, and prediction consistency.
-8. Withhold predictions with a clear reason when evidence is insufficient.
-9. Show top-3 ranked outputs and supporting evidence for accepted predictions.
-10. Deliver a working prototype, deployment, final documentation, and a demonstration *(PLANNED)*.
-
----
-
-## 4. How the System Works
-
-### Basic classifier vs. this system
-
-```
-BASIC CLASSIFIER
-Image → CNN → Highest Probability → Display Result
-
-THIS SYSTEM
-Image → Validate → Check Quality → Check Plant-Likelihood → CNN
-      → Confidence → Margin → Entropy → Consistency → Domain Check
-      → Final Decision → ACCEPT or WITHHOLD
-```
-
-| Aspect | Basic classifier | This system |
-|---|---|---|
-| Non-plant image | May still output one of 38 classes | Attempts to identify and withhold |
-| Blurry / dark / bright image | Outputs a label anyway | Checks quality, may withhold |
-| Ambiguous output | Hidden | Analyzed with margin and entropy |
-| Stability | Not checked | Checked with consistency test |
-| Explanation | Usually none | Evidence or reason shown |
-| Outcomes | One (a label) | Accept or Withhold |
-
-### Pipeline
-
-```
-            User Image
-                │
-        File Validation
-                │
-      Image Quality Analysis
-                │
-   Plant / Non-Plant Screening
-                │
-        Preprocessing
-                │
-          CNN Inference
-                │
- Confidence → Margin → Entropy
-                │
-      Prediction Consistency
-                │
-     Domain / OOD-related Checks
-                │
-         Final Decision
-        ┌───────┴────────┐
-        ▼                ▼
- Prediction Accepted   Prediction Withheld
- Class + Evidence      Reason + Guidance
+```text
+                USER
+                  |
+                  v
+          Upload Leaf Image
+                  |
+                  v
+            File Validation
+                  |
+                  v
+        Image Quality Analysis
+                  |
+                  v
+        Plant Content Screening
+                  |
+                  v
+          Image Preprocessing
+                  |
+                  v
+          CNN Model Inference
+                  |
+                  v
+       Prediction Probability Analysis
+                  |
+          +-------+-------+
+          |       |       |
+          v       v       v
+      Confidence Margin Entropy
+                  |
+                  v
+        Prediction Consistency
+                  |
+                  v
+        Reliability / Domain Checks
+                  |
+                  v
+          Final Decision Layer
+             /          \
+            /            \
+           v              v
+    ACCEPT PREDICTION   WITHHOLD
+           |              |
+           v              v
+    Predicted Class    Explanation
+    Confidence         and Guidance
+    Supporting Data
 ```
 
-> This is an academic project. It is **not** agriculturally certified and **not** claimed to be production-grade.
+The pipeline combines deep learning classification with additional checks intended to reduce misleading predictions.
 
----
+These checks are heuristic signals and do not provide a formal guarantee that an image is inside or outside the training distribution.
 
-## 5. Dataset and Supported Classes
+## 6. Dataset and Supported Classes
 
-The project uses the **PlantVillage** dataset: labeled leaf images of healthy and diseased plants. It is used for training, validation, testing, and per-class analysis.
+### 6.1 PlantVillage Dataset
 
-> **The full dataset is not committed to this repository** because of its size. No dataset URL is listed here because none was provided.
+The project uses the PlantVillage dataset, which contains labeled images of healthy and diseased plant leaves.
 
-### 38 supported classes
+The dataset provides the image examples required for supervised CNN training and evaluation.
 
-| Plant | Supported conditions | Count |
-|---|---|:---:|
+The full dataset is not included in this GitHub repository because of its size.
+
+### 6.2 Supported Classes
+
+The model covers 38 plant health and disease categories.
+
+| Plant | Supported Conditions | Number of Classes |
+|---|---|---:|
 | Apple | Apple Scab, Black Rot, Cedar Apple Rust, Healthy | 4 |
 | Blueberry | Healthy | 1 |
 | Cherry | Powdery Mildew, Healthy | 2 |
 | Corn | Cercospora Leaf Spot / Gray Leaf Spot, Common Rust, Northern Leaf Blight, Healthy | 4 |
 | Grape | Black Rot, Esca / Black Measles, Leaf Blight, Healthy | 4 |
-| Orange | Haunglongbing / Citrus Greening | 1 |
+| Orange | Huanglongbing / Citrus Greening | 1 |
 | Peach | Bacterial Spot, Healthy | 2 |
 | Pepper Bell | Bacterial Spot, Healthy | 2 |
 | Potato | Early Blight, Late Blight, Healthy | 3 |
@@ -173,378 +250,807 @@ The project uses the **PlantVillage** dataset: labeled leaf images of healthy an
 | Soybean | Healthy | 1 |
 | Squash | Powdery Mildew | 1 |
 | Strawberry | Leaf Scorch, Healthy | 2 |
-| Tomato | Bacterial Spot, Early Blight, Late Blight, Leaf Mold, Septoria Leaf Spot, Spider Mites, Target Spot, Tomato Yellow Leaf Curl Virus, Tomato Mosaic Virus, Healthy | 10 |
-| | **Total** | **38** |
+| Tomato | Bacterial Spot, Early Blight, Late Blight, Leaf Mold, Septoria Leaf Spot, Spider Mites, Target Spot, Yellow Leaf Curl Virus, Mosaic Virus, Healthy | 10 |
+| **Total** | **38 supported classes** | **38** |
 
-Anything outside this list is **outside the supported domain**.
+Images of unsupported plants and diseases are outside the model's known classification categories.
 
----
+### 6.3 Dataset Considerations
 
-## 6. CNN Model and Training
+- Dataset images are used for model development and evaluation.
+- The dataset is not automatically downloaded by the web application.
+- The original dataset is excluded from GitHub because of its size.
+- Real-world images may differ from PlantVillage images in lighting, background, camera quality and disease appearance.
 
-### Model (conceptual level)
+## 7. CNN Model and Training
 
-A CNN learns small filters that detect local visual patterns such as edges, textures, and lesion-like shapes. That makes it a good fit for leaf images.
+### 7.1 Convolutional Neural Network
 
-| Component | Role |
+A Convolutional Neural Network is a deep learning architecture commonly used for image recognition and classification.
+
+It learns visual features from images through layers of mathematical operations.
+
+The conceptual components include:
+
+| Component | Purpose |
 |---|---|
-| Convolution | Extracts local visual features |
-| Pooling | Reduces spatial size and adds tolerance to small shifts |
-| Dropout | Reduces overfitting during training |
-| Dense layers | Combine features for classification |
-| Softmax (38 outputs) | Turns scores into a probability for each class |
+| Convolution Layers | Extract visual features such as edges and textures |
+| Activation Functions | Introduce non-linearity |
+| Pooling Layers | Reduce spatial dimensions |
+| Dropout | Help reduce overfitting |
+| Dense Layers | Combine extracted features |
+| Softmax Output | Produce class probability scores |
 
-> Exact layer counts, filter sizes, and parameter counts are not stated here. Add them from the training code or model summary.
+The output layer represents the 38 supported classes.
 
-### Preprocessing
+### 7.2 Image Preprocessing
 
+The inference pipeline is designed around the model's input representation.
+
+The documented preprocessing format is:
+
+```text
+Input Image
+    |
+    v
+Image Validation
+    |
+    v
+Convert to RGB
+    |
+    v
+Resize to 128 x 128
+    |
+    v
+Convert to float32
+    |
+    v
+Normalize Pixel Values
+    |
+    v
+CNN Model
 ```
-Open → Validate → Convert to RGB → Resize to 128×128 → float32 → Normalize → CNN
+
+The preprocessing performed during inference must remain consistent with the preprocessing used during model training.
+
+### 7.3 Dataset Splitting
+
+The training methodology uses the following intended data split:
+
+| Dataset Split | Percentage | Purpose |
+|---|---:|---|
+| Training | 70% | Learn model parameters |
+| Validation | 15% | Monitor training and select model checkpoints |
+| Testing | 15% | Evaluate final performance |
+
+The test dataset should remain separate from training and model-selection activities.
+
+### 7.4 Training Techniques
+
+The earlier model-development work includes the following techniques:
+
+- Random horizontal flipping.
+- Random rotation.
+- Random zoom.
+- Early stopping.
+- Model checkpointing.
+
+These techniques help improve the model's ability to learn useful visual patterns and reduce overfitting.
+
+## 8. Model Evaluation
+
+The CNN model was evaluated using standard classification metrics.
+
+### 8.1 Evaluation Metrics
+
+| Metric | Description |
+|---|---|
+| Accuracy | Percentage of correctly classified test images |
+| Precision | Correct positive predictions relative to all positive predictions |
+| Recall | Correctly identified positive samples relative to actual positive samples |
+| F1-score | Harmonic mean of precision and recall |
+| Confusion Matrix | Shows correct and incorrect class predictions |
+| Classification Report | Provides per-class precision, recall, F1-score and support |
+
+### 8.2 Previously Recorded Model Result
+
+The earlier Week 6 model-development work recorded approximately:
+
+**92.89% test accuracy**
+
+This result belongs to the held-out PlantVillage evaluation setup used during that development stage.
+
+It should not be interpreted as guaranteed accuracy on arbitrary real-world plant photographs.
+
+The current Week 8 web application must be tested independently to verify that it loads the intended model and produces predictions correctly.
+
+### 8.3 Importance of Per-Class Evaluation
+
+Overall accuracy does not explain how well the model performs on every category.
+
+Per-class precision, recall and F1-score help identify:
+
+- Strongly classified categories.
+- Weakly classified categories.
+- Frequently confused plant conditions.
+- Categories that require further investigation.
+
+The reliability of the complete application depends on both classification performance and the additional decision layer.
+
+## 9. Image Validation and Reliability Layer
+
+This is an important part of the LeafGuard AI design.
+
+Instead of relying only on the CNN's highest probability, the system includes additional analysis components.
+
+### 9.1 File Validation
+
+The image validator is responsible for checking uploaded files.
+
+Potential checks include:
+
+- Whether a file was provided.
+- Whether the extension is supported.
+- Whether the image can be decoded.
+- Whether the image dimensions are acceptable.
+- Whether the file size is within configured limits.
+
+Supported formats are intended to include JPG, JPEG and PNG.
+
+### 9.2 Image Quality Analysis
+
+Image quality can affect model predictions.
+
+The quality checker considers image characteristics such as:
+
+| Signal | Purpose |
+|---|---|
+| Image Dimensions | Checks whether the image has sufficient resolution |
+| Blur | Examines sharpness |
+| Brightness | Detects very dark or bright images |
+| Contrast | Examines differences between image regions |
+
+Variance of the Laplacian can be used as a heuristic for blur detection.
+
+However, the appropriate thresholds depend on the image domain and must be validated.
+
+### 9.3 Plant Content Screening
+
+The plant detector uses lightweight visual or color-based analysis to estimate whether an image contains plant-like content.
+
+For example, RGB-based color analysis may examine green, yellow and brown regions.
+
+This is a heuristic screening technique, not a trained object detector or a plant segmentation model.
+
+### 9.4 Prediction Confidence
+
+The model produces a probability distribution over the supported classes.
+
+The highest probability represents the top predicted class.
+
+However:
+
+> A softmax score is not a calibrated probability that the prediction is correct.
+
+Confidence must therefore be considered alongside other evidence.
+
+### 9.5 Prediction Margin
+
+Prediction margin is the difference between the highest and second-highest prediction scores.
+
+For example:
+
+```text
+Example A:
+Class 1 = 88%
+Class 2 = 7%
+Margin = 81 percentage points
+
+Example B:
+Class 1 = 61%
+Class 2 = 58%
+Margin = 3 percentage points
 ```
 
-Inference preprocessing must stay **consistent** with the representation the model was trained on (size, channel order, data type, normalization).
+A smaller margin may indicate ambiguity between classes.
 
-### Data split
+### 9.6 Entropy
 
-| Split | Share | Role |
-|---|:---:|---|
-| Training | 70% | Learn model weights |
-| Validation | 15% | Monitor training, early stopping, checkpoint selection |
-| Test | 15% | Final evaluation on held-out data |
+Entropy measures the spread of the model's probability distribution.
 
-Test data must **not** be used for training or model selection. Otherwise the test score is inflated.
+A more distributed probability output generally indicates greater uncertainty.
 
-### Training techniques
+Entropy is used as another signal in the decision process.
 
-| Technique | Purpose |
+### 9.7 Prediction Consistency
+
+The system design includes checking predictions across modified versions of an image, such as:
+
+- Original image.
+- Horizontally flipped image.
+- Brightness-adjusted image variants.
+
+The objective is to examine whether the predicted class remains consistent under these changes.
+
+Consistency is not a guarantee of correctness.
+
+### 9.8 Domain and Uncertainty Analysis
+
+The project includes an OOD-related analysis component that combines signals from image validation, image quality and model prediction analysis.
+
+It should be treated as a heuristic decision layer rather than a formally validated out-of-distribution detection system.
+
+### 9.9 Possible Decision Outcomes
+
+| Outcome | Meaning |
 |---|---|
-| Random horizontal flip | Orientation tolerance |
-| Random rotation | Tolerance to leaf angle |
-| Random zoom | Tolerance to leaf size in frame |
-| Early stopping (restore best weights) | Stop when validation stops improving |
-| Model checkpointing | Save the best-performing model |
+| Accepted | Prediction satisfies the configured decision criteria |
+| Poor Quality | Image quality is insufficient |
+| Non-Plant | Plant-like content screening does not satisfy its criteria |
+| Uncertain | Prediction evidence is insufficient |
+| Out of Domain | Heuristic checks indicate a potentially unsupported input |
 
-No other augmentation techniques are claimed.
+The final decision depends on the configured thresholds and implementation.
 
----
+## 10. Technology Stack
 
-## 7. Model Evaluation
-
-| Metric | Meaning |
-|---|---|
-| Accuracy | Fraction of test images classified correctly |
-| Precision | Of images predicted as a class, how many truly belong to it |
-| Recall | Of images truly in a class, how many were found |
-| F1-score | Balance of precision and recall |
-| Confusion matrix | Which classes get mixed up |
-| Classification report | Per-class precision, recall, F1, and support |
-
-**Recorded result:** the Week 6 model reached approximately **92.89% test accuracy** on the held-out PlantVillage test setup used during development.
-
-> **This is not a real-world accuracy guarantee.** Real photos differ in lighting, background, camera quality, occlusion, multiple leaves, plant varieties, disease stages, and unseen domains.
-
-### Why per-class evaluation matters
-
-Overall accuracy can hide weak classes. Per-class precision, recall, F1, and support show which classes are strong, which are weak, and which get confused. Per-class numbers should be taken from the project's classification report and confusion matrix.
-
----
-
-## 8. Reliability and Decision Layer
-
-This layer is the core of the project. Every signal below is **one input** to the final decision, not a verdict on its own.
-
-| Stage | What it checks | Why it matters |
+| Category | Technology | Usage |
 |---|---|---|
-| **File validation** | File exists, `.jpg` / `.jpeg` / `.png`, decodes as an image, size and dimensions | Stops broken or unsupported files early |
-| **Image quality** | Width, height, sharpness, brightness, contrast | Poor images give unreliable predictions |
-| **Blur detection** | Variance of the Laplacian against a configurable threshold | Sharp images have stronger edges, so higher variance |
-| **Plant screening** | RGB-based vegetation ratio (green, yellow, brown regions) | Screens out obvious non-plant images |
-| **Confidence** | Top-1 softmax probability | Weak top class suggests weak evidence |
-| **Margin** | Gap between top-1 and top-2 | Small gap means ambiguity (e.g. 61% vs 58%, versus 88% vs 7%) |
-| **Entropy** | Normalized entropy of the probability distribution | Spread-out distribution means higher uncertainty |
-| **Consistency** | Prediction on original, horizontal flip, and two brightness variants | Stable predictions are stronger evidence |
-| **Domain / OOD signals** | Combines all signals above | Heuristic estimate of whether the image fits the supported domain |
+| Programming Language | Python | Backend and ML development |
+| Frontend | HTML5 | Application structure |
+| Styling | CSS3 | Responsive user interface |
+| Client-Side Logic | JavaScript | Image upload and interaction |
+| Backend Framework | Flask | HTTP routes and application logic |
+| Deep Learning | TensorFlow | Neural network operations |
+| Model API | Keras | Model loading and inference |
+| Image Processing | Pillow | Image reading and processing |
+| Numerical Processing | NumPy | Numerical operations |
+| Machine Learning | Scikit-learn | Evaluation and supporting ML tasks in the wider project |
+| Version Control | Git | Source control |
+| Repository Hosting | GitHub | Project hosting |
+| Deployment Target | Render | Planned public web hosting |
 
-**Caveats**
+## 11. Application Architecture
 
-- Laplacian variance and all thresholds are **heuristics**, not universal standards.
-- The plant screen is **not** an object detector or segmentation model. It can be fooled by similar-colored objects.
-- Consistency does **not** give robustness guarantees. A consistent prediction can still be wrong.
-- This is **not** a perfect or formally guaranteed OOD detector.
+### 11.1 Frontend
 
-### Decision outcomes
+The frontend provides the user interface for interacting with the application.
 
-| Outcome | Prediction shown | Meaning | What the user should do |
-|---|:---:|---|---|
-| **Accepted** | Yes | Signals together support the prediction | Review result and evidence. Consult an expert for real decisions |
-| **Poor Quality** | No | Too blurry, dark, bright, flat, or small | Upload a sharper, well-lit image |
-| **Non-Plant** | No | Not enough plant-like content | Upload a clear leaf photo |
-| **Uncertain** | No | Low confidence, small margin, high entropy, or inconsistent output | Try a closer image of a single leaf, plain background |
-| **Out of Domain** | No | Appears outside supported plants or conditions | Check the supported class list |
+Its responsibilities include:
 
-The mapping from signals to outcomes uses configurable thresholds and may be refined during the Capstone.
+- Displaying the LeafGuard AI homepage.
+- Allowing image selection.
+- Previewing the selected image.
+- Communicating with the backend.
+- Displaying available analysis results.
 
-### Evidence and Top-3
+### 11.2 Flask Backend
 
-- **Evidence** for accepted results: image dimensions, sharpness, brightness, vegetation ratio, confidence, margin, entropy, consistency. This makes decisions inspectable.
-- **Top-3** are ranked model outputs, **not** three confirmed diagnoses.
+The Flask backend handles the application logic and coordinates the image-analysis pipeline.
 
-> Example format (illustrative only, not a measured result):
-> `Tomato — Early Blight: 82.4%` · `Tomato — Late Blight: 8.7%` · `Tomato — Leaf Mold: 4.1%`
+Its responsibilities include:
 
----
+- Handling HTTP requests.
+- Receiving uploaded images.
+- Validating uploaded files.
+- Calling the relevant image-analysis components.
+- Loading and using the trained model.
+- Returning analysis results to the frontend.
 
-## 9. Web Application
+### 11.3 Machine Learning Integration
 
-### Technologies
+The trained CNN model is loaded by the backend through the model-loading component.
 
-| Layer | Technology |
+The prediction service handles preprocessing and model inference.
+
+The additional validation and decision components are used to examine the reliability of the input and prediction.
+
+### 11.4 Architecture Diagram
+
+```text
++------------------------------------+
+|             FRONTEND               |
+|                                    |
+|       HTML + CSS + JavaScript      |
+|                                    |
+|       Image Upload and Preview     |
++------------------+-----------------+
+                   |
+                   | HTTP Request
+                   v
++------------------------------------+
+|            FLASK BACKEND            |
+|                                    |
+|             app.py                 |
+|                                    |
++------------------+-----------------+
+                   |
+                   v
++------------------------------------+
+|        IMAGE VALIDATION            |
+|                                    |
+|        image_validator.py          |
++------------------+-----------------+
+                   |
+                   v
++------------------------------------+
+|       IMAGE QUALITY ANALYSIS       |
+|                                    |
+|        quality_checker.py          |
++------------------+-----------------+
+                   |
+                   v
++------------------------------------+
+|        PLANT CONTENT CHECK         |
+|                                    |
+|         plant_detector.py          |
++------------------+-----------------+
+                   |
+                   v
++------------------------------------+
+|         MODEL INFERENCE            |
+|                                    |
+|          model_loader.py           |
+|        prediction_service.py       |
+|                                    |
+|       TensorFlow / Keras CNN        |
++------------------+-----------------+
+                   |
+                   v
++------------------------------------+
+|      RELIABILITY ANALYSIS          |
+|                                    |
+|           ood_detector.py          |
+|                                    |
++------------------+-----------------+
+                   |
+                   v
++------------------------------------+
+|          FINAL RESPONSE            |
+|                                    |
+|      Prediction / Withholding      |
++------------------------------------+
+```
+
+## 12. Project Structure
+
+The repository contains the earlier AI/ML learning work and the Week 8 web application.
+
+The relevant Week 8 structure is:
+
+```text
+AI-ML-Foundation/
+|
+|-- week6/
+|   |-- models/
+|       |-- plant_disease_cnn_week6.keras
+|
+|-- week7/
+|
+|-- week8/
+    |
+    |-- app.py
+    |-- config.py
+    |-- image_validator.py
+    |-- model_loader.py
+    |-- ood_detector.py
+    |-- plant_detector.py
+    |-- prediction_service.py
+    |-- quality_checker.py
+    |
+    |-- requirements.txt
+    |-- pytest.ini
+    |-- README.md
+    |-- .gitignore
+    |
+    |-- static/
+    |   |-- style.css
+    |   |-- script.js
+    |
+    |-- templates/
+    |   |-- index.html
+    |
+    |-- tests/
+    |
+    |-- .venv/
+    |-- __pycache__/
+```
+
+**Note:** This is a representative structure based on the current project layout. The exact contents of the static, templates and tests directories may change as development continues.
+
+The `.venv` and `__pycache__` directories are local development artifacts and should not be committed to GitHub.
+
+The Week 8 application also relies on the trained model from the earlier Week 6 work. Its model path must be configured correctly for local execution and deployment.
+
+## 13. Installation and Setup
+
+Follow these instructions to run the project locally.
+
+### 13.1 Prerequisites
+
+Install the following:
+
+- Python 3.
+- Git.
+- Visual Studio Code (recommended).
+- A web browser.
+- GitHub repository access.
+
+The current development environment uses Python 3.13.14.
+
+### 13.2 Clone the Repository
+
+```bash
+git clone https://github.com/mohd-ibrahim-prog/AI-ML-Foundation.git
+```
+
+Navigate into the repository:
+
+```bash
+cd AI-ML-Foundation
+```
+
+Enter the Week 8 directory:
+
+```bash
+cd week8
+```
+
+### 13.3 Create a Virtual Environment
+
+```bash
+python -m venv .venv
+```
+
+### 13.4 Activate the Environment
+
+**Windows PowerShell:**
+
+```powershell
+.\.venv\Scripts\Activate.ps1
+```
+
+If PowerShell blocks activation, run:
+
+```powershell
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+```
+
+Then activate again:
+
+```powershell
+.\.venv\Scripts\Activate.ps1
+```
+
+### 13.5 Install Dependencies
+
+Upgrade pip:
+
+```bash
+python -m pip install --upgrade pip
+```
+
+Install the project dependencies:
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+### 13.6 Verify the Installation
+
+```bash
+python --version
+```
+
+Check TensorFlow:
+
+```bash
+python -m pip show tensorflow-cpu
+```
+
+The actual dependency versions should be taken from the current `requirements.txt` file.
+
+## 14. Running the Application
+
+After completing installation, start the Flask application:
+
+```bash
+python app.py
+```
+
+If the application starts successfully, Flask displays its local development address.
+
+Open:
+
+```text
+http://127.0.0.1:5000/
+```
+
+The application should display the LeafGuard AI homepage.
+
+### Current Local Execution Evidence
+
+The Week 8 application has successfully:
+
+- Started using Flask.
+- Served the homepage with HTTP 200.
+- Served `static/script.js` with HTTP 200.
+- Served `static/style.css` with HTTP 200.
+- Displayed the LeafGuard AI user interface in a browser.
+
+These checks establish that the local homepage and its static assets load successfully.
+
+They do not independently verify the complete CNN prediction workflow.
+
+### Stopping the Application
+
+To stop the local Flask server, press:
+
+```text
+CTRL + C
+```
+
+## 15. Testing and Validation
+
+Testing is essential to verify that the complete application works correctly.
+
+### 15.1 Application Testing
+
+| Test | Purpose |
 |---|---|
-| Language | Python |
-| Backend | Flask |
-| Frontend | HTML, CSS, JavaScript |
-| Model | TensorFlow / Keras |
-| Image processing | OpenCV, Pillow, NumPy |
+| Homepage Loading | Verify that the main page opens |
+| Static Assets | Verify CSS and JavaScript loading |
+| Image Upload | Verify image submission |
+| Image Preview | Verify frontend preview |
+| Backend Processing | Verify uploaded image handling |
+| Model Loading | Verify trained model loading |
+| Prediction | Verify CNN inference |
+| Error Handling | Verify invalid input handling |
 
-### Features
+### 15.2 Image Testing Scenarios
 
-Image upload, drag and drop, preview, analyze button, loading indicator, result with confidence, top-3, evidence panel, withheld message with reason, try again, supported class list, and limitations info. The layout is designed to work on desktop and mobile browsers.
+| Scenario | Input | Expected Behavior |
+|---|---|---|
+| Valid Leaf Image | Supported plant leaf image | Analyze and return a prediction when criteria are satisfied |
+| Non-Plant Image | Person, vehicle or unrelated object | Withhold or flag the prediction when screening detects the unsupported input |
+| Blurry Image | Out-of-focus leaf image | Apply image-quality checks |
+| Dark Image | Very low-brightness image | Apply brightness checks |
+| Unsupported Format | PDF or other unsupported file | Reject the upload |
+| Corrupted Image | Invalid image data | Handle decoding failure |
+| Ambiguous Prediction | Similar scores for multiple classes | Apply uncertainty analysis |
+| Unsupported Plant | Plant outside the supported classes | Apply domain-related checks |
 
-### Architecture
+### 15.3 Testing Framework
 
+Pytest is included in the project structure.
+
+Run the test suite from the Week 8 directory:
+
+```bash
+python -m pytest -v
 ```
-Browser (upload, preview, results)
-        │  HTTP request with image
-        ▼
-Flask Backend
-   File Validation → Image Quality → Plant Detector → Preprocessing
-   → CNN → Prediction Analysis → Decision Layer
-        │
-        ▼  JSON response: Accepted / Withheld
-Browser (shows result, evidence, or explanation)
+
+A successful test report should be recorded with the actual number of tests passed, failed or skipped.
+
+**Testing status:** The homepage and static-file responses have been observed successfully. Full prediction testing and the complete automated test results still need to be verified.
+
+## 16. Deployment
+
+The deployment target for LeafGuard AI is **Render**.
+
+The application is currently running locally. Public deployment is the next development milestone.
+
+### 16.1 Why Render?
+
+Render is suitable for deploying Python web applications and Flask backends.
+
+It supports connecting a GitHub repository, installing Python dependencies and running a web service.
+
+### 16.2 Planned Deployment Architecture
+
+```text
+GitHub Repository
+       |
+       v
+Render Web Service
+       |
+       v
+Install Python Dependencies
+       |
+       v
+Load Flask Application
+       |
+       v
+Load CNN Model
+       |
+       v
+Public Web Application
 ```
 
-The **browser** handles interaction and presentation. The **server** handles validation, model inference, and decisions.
+### 16.3 Planned Render Configuration
 
-### Backend components
-
-| File | Responsibility |
+| Setting | Value |
 |---|---|
-| `app.py` | Flask app, routes, pipeline coordination |
-| `config.py` | Central settings: paths, image size, class names, thresholds |
-| `image_validator.py` | File-level validation |
-| `quality_checker.py` | Dimensions, sharpness, brightness, contrast |
-| `plant_detector.py` | Vegetation / color-based plant screening |
-| `model_loader.py` | Loads the trained CNN |
-| `prediction_service.py` | Preprocessing, inference, top-K, confidence, margin, entropy, consistency |
-| `ood_detector.py` | Combines heuristic domain / uncertainty signals |
+| Platform | Render |
+| Service Type | Web Service |
+| Repository | AI-ML-Foundation |
+| Root Directory | week8 |
+| Runtime | Python |
+| Build Command | pip install -r requirements.txt |
+| Start Command | gunicorn app:app --bind 0.0.0.0:$PORT |
 
-Centralized configuration (`config.py`) covers model path, image size, class names, allowed extensions, upload size, and the quality, plant, confidence, margin, entropy, consistency, and top-K settings. This makes thresholds easy to tune in one place. Numeric values are not listed here.
+The start command assumes the Flask application object is named `app` inside `app.py`. This must be verified against the actual source code.
 
----
+### 16.4 Deployment Considerations
 
-## 10. Project Structure
+Before deployment, the following must be checked:
 
-```
-project/
-├── app.py
-├── config.py
-├── requirements.txt
-├── README.md
-├── .gitignore
-├── image_validator.py
-├── model_loader.py
-├── ood_detector.py
-├── plant_detector.py
-├── prediction_service.py
-├── quality_checker.py
-├── templates/
-│   └── index.html
-├── static/
-│   ├── style.css
-│   └── script.js
-├── tests/
-└── model/
-```
+- Correct model path.
+- Availability of the trained model in the deployment environment.
+- Correct Python and package compatibility.
+- Production WSGI server configuration.
+- Upload-size restrictions.
+- Memory usage during TensorFlow model loading.
+- Startup time.
+- Error handling.
+- Successful prediction through the public URL.
 
-> Representative structure. It may evolve during Capstone development. The dataset is not included.
+The model file must be accessible to the deployed application. A local model path that works on Windows will not automatically work on Render.
 
----
+**Deployment Status:** Planned. A public deployment URL will be added after successful deployment and testing.
 
-## 11. Capstone Scope, Prototype and Deployment
+## 17. Limitations and Responsible Use
 
-This repository is the **Capstone project**. It does not restart the AI/ML journey. It **productizes and improves** existing work.
+### 17.1 Current Limitations
 
-> **Capstone direction:** *"Develop a reliable AI-assisted plant disease image analysis system that combines CNN-based classification with image validation and uncertainty-aware prediction decisions through a user-friendly web interface."*
+1. The model is trained on the PlantVillage dataset.
+2. The model supports only 38 known categories.
+3. Real-world photographs may differ from training images.
+4. Softmax confidence is not a guarantee of correctness.
+5. Color-based plant screening is heuristic.
+6. Blur, brightness and contrast thresholds require validation.
+7. Prediction consistency does not guarantee a correct result.
+8. The OOD-related component is not a formally validated OOD detector.
+9. Disease severity estimation is not part of the current documented scope.
+10. The system is not a substitute for expert agricultural diagnosis.
 
-| Activity | Status |
+### 17.2 Responsible Use
+
+LeafGuard AI is an academic AI/ML project.
+
+The output should be interpreted as an AI-assisted classification result rather than a confirmed diagnosis.
+
+For important agricultural decisions, users should consult qualified agricultural professionals.
+
+The project's design philosophy is:
+
+> It is better to withhold an unsupported prediction than to present an unjustified result as certain.
+
+## 18. Skills and Concepts Applied
+
+The project combines concepts from programming, machine learning, deep learning, computer vision and web development.
+
+| Area | Skills and Concepts |
 |---|---|
-| Finalize scope | In progress |
-| Integrate existing components | Planned |
-| Build working prototype | Planned (next milestone) |
-| Improve UI/UX | Planned |
-| Test complete system | Planned |
-| Deploy | Planned (Render) |
-| Final documentation | In progress |
-| Final demonstration | Planned |
+| Programming | Python, JavaScript |
+| Data Processing | NumPy, Pandas |
+| Machine Learning | Supervised learning, classification, data splitting |
+| Deep Learning | CNN, TensorFlow, Keras, Softmax |
+| Computer Vision | Image preprocessing, RGB, image resizing |
+| Image Analysis | Blur, brightness, contrast and color analysis |
+| Model Evaluation | Accuracy, precision, recall, F1-score, confusion matrix |
+| Prediction Analysis | Confidence, margin, entropy and consistency |
+| Backend Development | Flask, HTTP requests, file uploads |
+| Frontend Development | HTML, CSS, JavaScript |
+| Software Engineering | Modular code, configuration, requirements management |
+| Testing | Pytest and application validation |
+| Version Control | Git and GitHub |
+| Deployment | Render and production application configuration |
 
-### Prototype flow (PLANNED)
+## 19. Future Enhancements
 
-```
-Open app → Upload → Preview → Analyze → Validation → CNN → Decision Engine → Result
-```
+The following are potential improvements and are not claimed as completed features.
 
-### Deployment (PLANNED)
-
-The Capstone deployment phase will **target Render**. It has **not** been completed.
-
-```
-GitHub → Render → Build Environment → Dependencies → Flask App → Public URL
-```
-
-Deployment work includes production configuration, dependency management via `requirements.txt`, build and start commands, model file path, deployment testing, error checking, and handling memory and startup limits when loading a TensorFlow/Keras model.
-
----
-
-## 12. Demonstration and Testing Plan
-
-| Scenario | Input | Expected behavior |
-|:---:|---|---|
-| 1 | Valid plant image | **Accepted**: class, confidence, top-3, evidence |
-| 2 | Non-plant image | **Withheld** (non-plant) |
-| 3 | Poor-quality image | **Withheld** (poor quality) |
-| 4 | Uncertain image | **Withheld** (uncertain) |
-
-A normal classifier would give a disease label in all four cases. These scenarios show the system deciding whether it has enough evidence first.
-
-### Testing categories
-
-| Category | Expected behavior |
+| Area | Future Enhancement |
 |---|---|
-| Valid plant images | Accepted with evidence |
-| Poor-quality images | Withheld as Poor Quality |
-| Non-plant images | Withheld as Non-Plant, or flagged by other signals |
-| Ambiguous images | Withheld as Uncertain |
-| Unsupported / out-of-domain images | Withheld as Out of Domain where heuristics detect it |
+| Dataset | Add more real-world plant images |
+| Classification | Expand supported plant species and disease categories |
+| Model Improvement | Experiment with transfer learning and improved CNN architectures |
+| Explainable AI | Integrate Grad-CAM visual explanations |
+| Uncertainty | Explore calibrated confidence and more advanced uncertainty methods |
+| OOD Detection | Evaluate embedding-based and other formal OOD detection approaches |
+| Computer Vision | Add disease-region segmentation |
+| Disease Analysis | Explore disease severity estimation |
+| User Experience | Improve reporting and result presentation |
+| Platform | Explore Progressive Web App or mobile application support |
+| Deployment | Improve monitoring, performance and scalability |
 
-> No test accuracy is claimed for the decision layer. Because it is heuristic, a bad image may be accepted or a good image withheld.
+## 20. Development Roadmap
 
----
+The project builds on the AI/ML foundation developed during Weeks 1–7.
 
-## 13. Limitations and Responsible Use
+| Phase | Development Activity | Status |
+|---|---|---|
+| Week 1 | Python and data science fundamentals | Earlier work |
+| Week 2 | Data analysis and preprocessing | Earlier work |
+| Week 3 | Machine learning fundamentals | Earlier work |
+| Week 4 | PlantVillage dataset preparation and initial deep learning work | Earlier work |
+| Week 5 | CNN model development and training | Earlier work |
+| Week 6 | Model improvement and evaluation | Earlier work |
+| Week 7 | Model analysis and per-class evaluation | Earlier work |
+| Week 8 | Flask web application and AI integration | Local application running; full workflow verification pending |
+| Week 9 | Capstone integration and refinement | Planned |
+| Week 10 | Prototype testing and improvements | Planned |
+| Week 11 | Public deployment and deployment testing | Planned |
+| Week 12 | Final documentation, polish and demonstration | Planned |
 
-### Limitations
+The weekly activities describe the broader learning and project-development journey. They do not imply that every planned milestone has already been completed.
 
-- The model is trained on **PlantVillage**, which may differ from real-world photos.
-- Only **38 classes** are supported. Other plants and diseases are outside the domain.
-- Real-world accuracy may be lower than the PlantVillage test result.
-- The plant detector, quality thresholds, and OOD signals are all **heuristic**.
-- Softmax confidence is not the real probability of being correct.
-- No disease severity estimation is implemented.
-- Outputs are **not** professional agricultural diagnosis.
+## 21. Current Project Status
 
-### Responsible use
+### Development Status
 
-This is an **academic AI/ML Capstone project**. It should **not** replace agricultural experts, professional diagnosis, or field inspection.
-
-The system deliberately favors:
-
-> **"No prediction over an unjustified prediction."**
-
-A confident but wrong label can mislead a user. Withholding is an intentional design choice that trades some convenience for caution and transparency.
-
----
-
-## 14. Skills Used
-
-These are skills developed and used in this project, not professional certifications.
-
-| Area | Skills |
+| Component | Current Status |
 |---|---|
-| Programming | Python, JavaScript, HTML, CSS |
-| Data Science | Pandas, NumPy, data cleaning, data analysis |
-| Machine Learning | Supervised learning, Linear Regression, classification, model evaluation, train/test split |
-| NLP | Text preprocessing, TF-IDF, Naive Bayes |
-| Deep Learning | TensorFlow, Keras, CNN, softmax, augmentation, early stopping, checkpointing |
-| Computer Vision | Image preprocessing, RGB, resizing, blur, brightness and contrast analysis, vegetation detection |
-| Model Evaluation | Accuracy, precision, recall, F1, confusion matrix, per-class evaluation, confidence, margin, entropy, consistency |
-| Backend | Flask, file upload, request handling, JSON responses, validation, error handling |
-| Frontend | Responsive HTML/CSS, JavaScript, drag and drop, image preview, API communication, dynamic results |
-| Software Engineering | Modular Python, configuration, requirements management, testing, Git, GitHub, documentation |
-| Deployment | Web deployment concepts, Render, production configuration, dependency management |
+| AI/ML Foundation | Earlier work completed |
+| PlantVillage Dataset Work | Earlier work completed |
+| CNN Model Development | Earlier work completed |
+| Week 6 Model Evaluation | Earlier results recorded |
+| Per-Class Model Analysis | Earlier work completed |
+| Week 8 Flask Backend | Application starts locally |
+| LeafGuard AI Homepage | Loads locally |
+| CSS and JavaScript | Static files return HTTP 200 |
+| Model Integration | Implemented components present; end-to-end prediction needs verification |
+| Image Upload Workflow | Full workflow needs verification |
+| Prediction Reliability | Full behavior needs verification |
+| Automated Testing | Results need verification |
+| GitHub | Existing repository |
+| Render Deployment | Planned |
+| Final Demonstration | Planned |
+
+### Current Milestone
+
+**Week 8 — Local Web Application**
+
+The Flask development server successfully starts and serves the LeafGuard AI homepage.
+
+The next milestone is to verify actual plant-image predictions, model availability, upload validation and error handling.
+
+After successful local testing, the application will be prepared for Render deployment.
+
+### Repository
+
+GitHub:  
+https://github.com/mohd-ibrahim-prog/AI-ML-Foundation
+
+## 22. Conclusion
+
+LeafGuard AI brings together machine learning, deep learning, computer vision and web development to create an AI-assisted plant disease analysis application.
+
+The project began with data preparation and machine learning fundamentals, progressed through CNN development and evaluation, and now includes a Flask-based web application.
+
+Its central contribution is the attempt to go beyond conventional classification by considering image quality, prediction confidence and uncertainty before presenting a result.
+
+The objective is not simply to make a model predict a disease.
+
+It is to build a system that considers whether the available image provides sufficient evidence for a prediction.
+
+> **LeafGuard AI — Smarter Plant Analysis Through AI, Validation and Responsible Predictions.**
+
+## 23. Disclaimer
+
+This is an academic AI/ML project developed for educational and demonstration purposes.
+
+The model's predictions are based on its training data and supported classification categories. They may be inaccurate, especially for unsupported plant species, diseases, poor-quality images and real-world images that differ from the training dataset.
+
+The application should not be treated as a professional agricultural diagnosis system.
+
+Always consult qualified agricultural professionals before making important crop-treatment or agricultural decisions.
 
 ---
 
-## 15. Future Scope
-
-> **FUTURE only. None of these are implemented.**
-
-| Area | Ideas |
-|---|---|
-| Data | Larger real-world dataset, more plant species and diseases |
-| OOD / uncertainty | Embedding-based distance, deep ensembles, Monte Carlo dropout, energy-based methods |
-| Explainability | Grad-CAM, attention visualization, saliency maps |
-| Vision | Image segmentation, disease severity estimation |
-| Platforms | Android / iOS apps or PWA |
-| Content | Educational agricultural information |
-| Maintenance | Continuous model improvement |
-
----
-
-## 16. Roadmap and Current Status
-
-### Project phases
-
-| Phase | Name | Meaning | Status |
-|:---:|---|---|---|
-| 1 | Foundation & Model Development | Technical foundation and CNN development on PlantVillage | Completed (background) |
-| 2 | Model Evaluation | Metrics, confusion matrix, per-class analysis | Completed (background) |
-| 3 | Reliability & Validation Layer | Validation, quality, plant screening, uncertainty signals | Project basis, integration in Capstone |
-| 4 | Web Application | Flask interface for upload, analysis, results | Project basis, refinement in Capstone |
-| 5 | Capstone Prototype | One integrated, tested prototype with polished UI | **Planned (next)** |
-| 6 | Deployment | Public URL, targeting Render | **Planned** |
-| 7 | Final Polish & Demonstration | Final testing, documentation, demo | **Planned** |
-
-### Long-term vision
-
-```
-Basic CNN Classifier → Validated CNN Classifier → Uncertainty-Aware Prediction
-→ User-Friendly Application → Public Deployment → Explainable AI
-→ Real-World Dataset Expansion → Advanced Plant Disease Analysis
-```
-
-The first three steps are the current basis. Deployment is planned. Explainable AI and dataset expansion are future scope.
-
-### Current status
-
-| Item | Status |
-|---|---|
-| Current phase | **Capstone Scope Finalization** |
-| Current objective | Finalize the Capstone direction and system scope based on the completed AI/ML work |
-| Next milestone | **Working Prototype** |
-| Deployment | **Render** (planned, not completed) |
-| Final deliverable | A documented, working, deployable plant disease detection and analysis web application with a final demonstration |
-
----
-
-## 17. Conclusion
-
-The project grew from data preparation, machine learning, NLP, deep learning, and computer vision into CNN training, evaluation, and per-class analysis. It then recognized that **accuracy on a held-out dataset is not the same as reliability on arbitrary user images**, and added image validation and uncertainty analysis. The Capstone brings these pieces into a user-facing web application, with deployment planned.
-
-The goal is not merely to predict a disease. The goal is:
-
-> **"To determine whether the system has enough evidence to provide a plant disease prediction for a given image."**
-
-A normal classifier always tries to choose a class. This project can decide **not** to show a prediction when the evidence is insufficient.
-
----
-
-## 18. Disclaimer
-
-This project is an **academic AI/ML Capstone Project**. Predictions come from a machine learning model trained on a fixed dataset and are **not** professional agricultural diagnosis or expert advice.
-
-The system may be wrong, especially for unsupported plant species, unsupported diseases, poor-quality images, out-of-domain images, and real-world images that differ significantly from the training data. For real agricultural decisions, consult qualified professionals.
-
----
-
-<p align="center"><b>AI-Powered Plant Disease Detection & Analysis System</b><br>An academic AI/ML Capstone Project</p>
+<p align="center">
+  <strong>LeafGuard AI</strong><br>
+  AI-Powered Plant Disease Detection & Analysis System<br>
+  Academic AI/ML Project
+</p>
