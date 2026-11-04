@@ -18,15 +18,8 @@
     --muted: #a3b8ad;
     --border: rgba(255, 255, 255, 0.15);
 
-    --red: #b94a42;
-    --red-bg: #fff2ef;
-    --amber: #a56b20;
-    --amber-bg: #fff8e9;
-
     --shadow: 0 25px 50px rgba(0, 0, 0, 0.35);
     --radius-lg: 24px;
-    --radius-md: 16px;
-    --radius-sm: 10px;
 }
 
 *, *::before, *::after {
@@ -43,7 +36,6 @@ html {
 body {
     min-height: 100vh;
     background-color: var(--dark-bg);
-    /* Plant leaves background image overlay */
     background-image: linear-gradient(rgba(11, 20, 16, 0.8), rgba(11, 20, 16, 0.92)), url('https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?auto=format&fit=crop&w=2000&q=80');
     background-size: cover;
     background-position: center;
@@ -56,7 +48,6 @@ body {
 
 button, input { font: inherit; }
 a { color: inherit; text-decoration: none; }
-
 [hidden] { display: none !important; }
 
 .site-shell {
@@ -139,27 +130,30 @@ a { color: inherit; text-decoration: none; }
     transition: all 0.2s ease;
 }
 .nav-cta:hover { background: #27784a; }
-.nav-cta span { margin-left: 6px; }
 
-/* HERO SECTION */
+/* HERO SECTION (Centered clean layout) */
 .hero {
-    min-height: 480px;
-    display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
+    min-height: 280px;
+    display: flex;
     align-items: center;
-    gap: 40px;
-    padding: 60px 20px 40px;
+    justify-content: center;
+    text-align: center;
+    padding: 40px 20px 20px;
+}
+
+.hero-copy {
+    max-width: 750px;
 }
 
 .eyebrow {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 10px;
     font-size: 10px;
     letter-spacing: 2px;
     font-weight: 800;
     color: #8ce2ab;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 .eyebrow-line { width: 24px; height: 2px; background: #4eaa70; }
 
@@ -173,14 +167,13 @@ a { color: inherit; text-decoration: none; }
 .hero h1 em { font-style: normal; color: #4eaa70; }
 
 .hero-description {
-    max-width: 520px;
-    margin-top: 20px;
+    margin-top: 15px;
     color: var(--muted);
     font-size: 15px;
     line-height: 1.7;
 }
 
-.hero-actions { margin-top: 28px; }
+.hero-actions { margin-top: 25px; }
 
 .primary-link {
     display: inline-flex;
@@ -197,44 +190,8 @@ a { color: inherit; text-decoration: none; }
 }
 .primary-link:hover { background: #27784a; transform: translateY(-2px); }
 
-/* HERO VIDEO EMBED CARD (Discovery Channel Style inside Website) */
-.hero-art {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: flex-end;
-}
-
-.hero-video-card {
-    width: 340px;
-    background: rgba(18, 38, 28, 0.88);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 16px;
-    padding: 12px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.4);
-}
-
-.video-container-embed {
-    width: 100%;
-    height: 190px;
-    border-radius: 10px;
-    overflow: hidden;
-    background: #000;
-}
-
-.video-container-embed iframe {
-    width: 100%;
-    height: 100%;
-    border: 0;
-}
-
-.video-meta { margin-top: 10px; }
-.video-meta strong { display: block; font-size: 13px; color: white; }
-.video-meta span { display: block; font-size: 10px; color: var(--muted); margin-top: 3px; line-height: 1.4; }
-
 /* ANALYZER CARD */
-.analyzer-section { margin-top: 30px; }
+.analyzer-section { margin-top: 20px; }
 .analyzer-card {
     background: var(--card-bg);
     color: #183528;
@@ -374,12 +331,12 @@ a { color: inherit; text-decoration: none; }
 
 .result-card { display: flex; gap: 16px; padding: 24px; margin-top: 20px; border-radius: 14px; border: 1px solid #e2e9df; }
 .result-success { background: #f7fcf7; border-color: #d6ead8; }
-.result-error { background: var(--red-bg); border-color: #f0d5cf; }
+.result-error { background: #fff2ef; border-color: #f0d5cf; }
 .result-withheld { background: #fffaf0; border-color: #efe2c3; }
 
 .result-icon { width: 40px; height: 40px; display: grid; place-items: center; flex-shrink: 0; border-radius: 12px; font-weight: 900; }
 .success-icon { background: #e2f3e4; color: #1d593b; }
-.withheld-icon { background: #f8ebcd; color: var(--amber); }
+.withheld-icon { background: #f8ebcd; color: #a56b20; }
 
 .result-content { flex: 1; min-width: 0; }
 .result-content h3 { font-size: 17px; color: #102e20; margin-top: 4px; }
@@ -397,6 +354,57 @@ a { color: inherit; text-decoration: none; }
 .confidence-header { display: flex; justify-content: space-between; font-size: 11px; font-weight: 700; color: #627269; margin-bottom: 6px; }
 .confidence-track { width: 100%; height: 8px; border-radius: 20px; background: #e2ece2; overflow: hidden; }
 .confidence-progress { height: 100%; width: 0%; background: linear-gradient(90deg, #1d593b, #4eaa70); transition: width 0.7s ease; }
+
+/* =========================================================
+   WIDE CINEMATIC DISCOVERY CHANNEL STYLE VIDEO SECTION
+   ========================================================= */
+.discovery-video-section {
+    margin-top: 50px;
+    padding: 35px;
+    background: rgba(18, 38, 28, 0.82);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+}
+
+.discovery-header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.discovery-header h2 {
+    color: #ffffff;
+    font-size: clamp(22px, 2.5vw, 30px);
+    margin-top: 6px;
+}
+
+.discovery-header p {
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 6px;
+}
+
+.cinematic-video-wrapper {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+    height: 0;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #000;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cinematic-video-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
 
 /* PROCESS & MODEL SECTIONS */
 .process-section, .model-section { margin-top: 60px; }
@@ -440,8 +448,6 @@ a { color: inherit; text-decoration: none; }
 .back-top { width: 32px; height: 32px; display: grid; place-items: center; border-radius: 8px; background: rgba(255, 255, 255, 0.1); color: white; }
 
 @media (max-width: 900px) {
-    .hero { grid-template-columns: 1fr; padding-top: 30px; }
-    .hero-art { display: none; }
     .process-grid, .model-stats { grid-template-columns: repeat(2, 1fr); }
     .header-nav { display: none; }
 }
